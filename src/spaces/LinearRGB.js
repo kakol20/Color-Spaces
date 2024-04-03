@@ -1,6 +1,7 @@
 const LinearRGB = (function () {
   return {
     // c: p5.Color
+    // out: array
     sRGBtoLinear(c) {
       const r = red(c) / 255.0;
       const g = green(c) / 255.0;
@@ -20,6 +21,7 @@ const LinearRGB = (function () {
     },
 
     // c: array
+    // out: array
     LineartosRGB(c) {
       let out = JSON.parse(JSON.stringify(c)); // deep copy
 

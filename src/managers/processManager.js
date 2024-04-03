@@ -24,25 +24,15 @@ const ProcessManager = (function () {
     setup() {
       this.generatePalette();
 
-      let testMat = new Matrix([
-        [1, 2, -1],
-        [2, 1, 2],
-        [-1, 2, 1]
-      ]);
+      let testRGB = [1, 1, 1];
+      console.log(testRGB);
 
-      // let testMat = new Matrix([
-      //   [0.4124564, 0.2126729, 0.0193339],
-      //   [0.3575761, 0.7151522, 0.1191920],
-      //   [0.1804375, 0.0721750, 0.9503041]
-      // ]);
+      let testXYZ = CIEXYZ.ToXYZ(testRGB);
+      console.log(testXYZ);
 
-      console.log(testMat);
-
-      let inverted = new Matrix();
-      inverted.copy(testMat);
-
-      inverted.invert3x3();
-      console.log(inverted);
+      let testLab = JSON.parse(JSON.stringify(testXYZ));
+      testLab = OkLab.XYZtoLab(testXYZ);
+      console.log(testLab);
     },
 
     generatePalette() {
@@ -75,6 +65,9 @@ const ProcessManager = (function () {
             break;
           case 'CIE XYZ':
             c = CIEXYZ.mix(start, end, t);
+            break;
+          case 'OkLab':
+            c = OkLab.mix(start, end, t);
             break;
           default:
             c = sRGB.mix(start, end, t);

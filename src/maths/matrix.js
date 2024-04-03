@@ -185,6 +185,21 @@ class Matrix {
     }
   }
 
+  pow(p) {
+    for (let i = 0; i < this.col; i++) {
+      for (let j = 0; j < this.row; j++) {
+        this.mat[i][j] = Math.pow(this.mat[i][j], p);
+      }
+    }
+  }
+  cbrt() {
+    for (let i = 0; i < this.col; i++) {
+      for (let j = 0; j < this.row; j++) {
+        this.mat[i][j] = Math.cbrt(this.mat[i][j]);
+      }
+    }
+  }
+
   static Arr3ToMat(a) {
     return new Matrix([[a[0], a[1], a[2]]]);
   }

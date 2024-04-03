@@ -22,6 +22,7 @@ const DOMManager = (function () {
       this.spaceSelect.option('sRGB');
       this.spaceSelect.option('Linear RGB');
       this.spaceSelect.option('CIE XYZ');
+      this.spaceSelect.option('OkLab');
 
       this.spaceSelect.selected('sRGB');
 
