@@ -90,8 +90,71 @@ class Matrix {
 
     this.mat = JSON.parse(JSON.stringify(newMat));
     this.col = newCol;
-    
+
     return true;
+  }
+
+  transpose() {
+    let newMat = new Matrix();
+    newMat.createMat(this.row, this.col);
+
+    for (let i = 0; i < this.col; i++) {
+      for (let j = 0; j < this.row; j++) {
+        newMat.mat[j][i] = this.mat[i][j];
+      }
+    }
+
+    this.copy(newMat);
+  }
+
+  det2x2() {
+    if (this.col === 2 && this.row === 2) {
+      return (this.mat[0][0] * this.mat[1][1]) - (this.mat[1][0] * this.mat[0][1]);
+    }
+  }
+
+  cofactor3x3() {
+    if (this.col === 3 && this.row === 3) {
+      // find cofactor
+      let cofactor = new Matrix();
+      cofactor.createMat(3, 3);
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          let colMin, colMax;
+          let rowMin, rowMax;
+
+          colMax = i <= 1 ? 2 : 1;
+          colMin = i >= 1 ? 0 : 1;
+
+          rowMax = j <= 1 ? 2 : 1;
+          rowMin = j >= 1 ? 0 : 1;
+
+          const detMat = new Matrix([
+            [this.mat[colMin][rowMin], this.mat[colMin][rowMax]],
+            [this.mat[colMax][rowMin], this.mat[colMax][rowMax]]
+          ]);
+
+          cofactor.mat[i][j] = detMat.det2x2() * Math.pow(-1, i + j + 2);
+        }
+      }
+
+      this.copy(cofactor);
+    }
+
+  }
+
+  invert3x3() {
+    if (this.col === 3 && this.row === 3) {
+      // find cofactor
+      let adjoint = new Matrix(this.mat);
+
+      adjoint.cofactor3x3();
+      console.log(adjoint);
+
+      adjoint.transpose();
+      console.log(adjoint);
+    }
   }
 
   static Arr3ToMat(a) {
