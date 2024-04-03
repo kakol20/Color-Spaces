@@ -14,9 +14,9 @@ class Matrix {
   3
 
   Example 2:
-  [[1, 2], [2, 3], [4, 5]]
-  1 2 4
-  2 2 5
+  [[1, 2], [3, 4], [5, 6]]
+  1 3 5
+  2 4 6
   */
   constructor(mat = [[0]]) {
     this.mat = JSON.parse(JSON.stringify(mat));
