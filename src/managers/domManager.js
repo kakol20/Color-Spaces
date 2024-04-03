@@ -23,7 +23,7 @@ const DOMManager = (function () {
       this.spaceSelect.option('Linear RGB');
 
       this.spaceSelect.selected('sRGB');
-      this.spaceSelect.disable('Linear RGB');
+      // this.spaceSelect.disable('Linear RGB');
 
       this.domHeight = 70 + this.spaceSelect.height + 10;
 
