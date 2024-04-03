@@ -23,21 +23,10 @@ const ProcessManager = (function () {
 
     setup() {
       this.generatePalette();
-
-      // clear();
-
-      let rhs = new Matrix([[1, 0, 2], [2, 1, 3], [1, 0, 4]]);
-      let lhs = new Matrix([[2, 6, 1], [5, 7, 8]]);
-      let result = new Matrix();
-      result.copy(rhs);
-      result.mult(lhs);
-
-      console.log(rhs);
-      console.log(lhs);
-      console.log(result);
     },
 
     generatePalette() {
+      console.log('Select: ' + DOMManager.spaceSelect.selected());
 
       const start = DOMManager.startColorPicker.color();
       const end = DOMManager.endColorPicker.color();
@@ -63,6 +52,9 @@ const ProcessManager = (function () {
             break;
           case 'Linear RGB':
             c = LinearRGB.mix(start, end, t);
+            break;
+          case 'CIE XYZ':
+            c = CIEXYZ.mix(start, end, t);
             break;
           default:
             c = sRGB.mix(start, end, t);
