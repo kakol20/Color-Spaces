@@ -9,10 +9,12 @@ const MainManager = (function () {
     setup() {
       pixelDensity(1);
 
-      this.canvas = createCanvas(10, 10);
+      this.canvas = createCanvas(windowWidth, windowHeight);
       this.canvas.position(0, 0);
 
       ProcessManager.setup();
+
+      noLoop();
     },
 
     draw(dt) {
