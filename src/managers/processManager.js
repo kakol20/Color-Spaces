@@ -23,6 +23,16 @@ const ProcessManager = (function () {
 
     setup() {
       this.generatePalette();
+
+      let testMat = new Matrix([
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9]
+      ]);
+
+      console.log(testMat);
+
+      testMat.invert3x3();
     },
 
     generatePalette() {
