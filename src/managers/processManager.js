@@ -23,11 +23,21 @@ const ProcessManager = (function () {
 
     setup() {
       this.generatePalette();
+
+      // clear();
+
+      let rhs = new Matrix([[1, 0, 2], [2, 1, 3], [1, 0, 4]]);
+      let lhs = new Matrix([[2, 6, 1], [5, 7, 8]]);
+      let result = new Matrix();
+      result.copy(rhs);
+      result.mult(lhs);
+
+      console.log(rhs);
+      console.log(lhs);
+      console.log(result);
     },
 
     generatePalette() {
-      // console.log('Button pressed');
-      clear();
 
       const start = DOMManager.startColorPicker.color();
       const end = DOMManager.endColorPicker.color();
@@ -44,6 +54,9 @@ const ProcessManager = (function () {
         // const c = sRGB.mix(start, end, t);
         let c;
 
+        // https://www.cs.rit.edu/~ncs/color/t_convert.html#RGB%20to%20XYZ%20&%20XYZ%20to%20RGB
+        // https://bottosson.github.io/posts/oklab/
+        // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
         switch (DOMManager.spaceSelect.selected()) {
           case 'sRGB':
             c = sRGB.mix(start, end, t);
