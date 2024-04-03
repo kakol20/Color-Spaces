@@ -113,6 +113,18 @@ class Matrix {
     }
   }
 
+  det3x3() {
+    if (this.col === 3 && this.row === 3) {
+      return (this.mat[0][0] * this.mat[1][1] * this.mat[2][2]) +
+        (this.mat[1][0] * this.mat[2][1] * this.mat[0][2]) +
+        (this.mat[2][0] * this.mat[0][1] * this.mat[1][2]) -
+
+        (this.mat[0][0] * this.mat[2][1] * this.mat[1][2]) -
+        (this.mat[1][0] * this.mat[0][1] * this.mat[2][2]) -
+        (this.mat[2][0] * this.mat[1][1] * this.mat[0][2]);
+    }
+  }
+
   cofactor3x3() {
     if (this.col === 3 && this.row === 3) {
       // find cofactor
@@ -141,18 +153,30 @@ class Matrix {
 
       this.copy(cofactor);
     }
+  }
 
+  scalar(s) {
+    for (let i = 0; i < this.col; i++) {
+      for (let j = 0; j < this.row; j++) {
+        this.mat[i][j] *= s;
+      }
+    }
   }
 
   invert3x3() {
+    // https://www.cuemath.com/algebra/inverse-of-3x3-matrix/
     if (this.col === 3 && this.row === 3) {
       // find cofactor
       let adjoint = new Matrix(this.mat);
 
       adjoint.cofactor3x3();
+      adjoint.transpose();
       console.log(adjoint);
 
-      adjoint.transpose();
+      const det = this.det3x3();
+      console.log(det);
+
+      adjoint.scalar(1 / det);
       console.log(adjoint);
     }
   }

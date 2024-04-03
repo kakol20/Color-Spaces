@@ -24,6 +24,12 @@ const ProcessManager = (function () {
     setup() {
       this.generatePalette();
 
+      // let testMat = new Matrix([
+      //   [1, 2, -1],
+      //   [2, 1, 2],
+      //   [-1, 2, 1]
+      // ]);
+
       let testMat = new Matrix([
         [0.4124564, 0.2126729, 0.0193339],
         [0.3575761, 0.7151522, 0.1191920],
