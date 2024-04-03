@@ -32,14 +32,7 @@ const ProcessManager = (function () {
       const start = DOMManager.startColorPicker.color();
       const end = DOMManager.endColorPicker.color();
 
-      // console.log(start);
-      // console.log(end);
-
-      // console.log(red(start));
-
       background(28);
-
-      // drawColors(DOMManager.startColorPicker.color(), 10, DOMManager.domHeight);
 
       const iLimit = Math.floor((windowWidth - squareSize - 20) / squareSize) + 1;
 
