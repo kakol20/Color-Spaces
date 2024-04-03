@@ -94,14 +94,6 @@ class Matrix {
     return true;
   }
 
-  // function arr3ToMat(c) {
-  //   let matArr = [[c[0], c[1], c[2]]];
-  //   return new Matrix(matArr);
-  // }
-  // function matToArr3(m) {
-  //   return [m[0][0], m[0][1], m[0][1]];
-  // }
-
   static Arr3ToMat(a) {
     return new Matrix([[a[0], a[1], a[2]]]);
   }

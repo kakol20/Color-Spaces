@@ -11,6 +11,8 @@ const CIEXYZ = (function () {
     [-0.4985314, 0.0415560, 1.0572252]
   ]);
 
+  // const 
+
   return {
     // rgb: array
     // out: array
