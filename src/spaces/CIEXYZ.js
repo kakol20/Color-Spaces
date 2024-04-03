@@ -1,4 +1,5 @@
 const CIEXYZ = (function () {
+  // http://www.brucelindbloom.com/index.html?Eqn_RGB_to_XYZ.html
   const toXYZMat = new Matrix([
     [0.4124564, 0.2126729, 0.0193339],
     [0.3575761, 0.7151522, 0.1191920],
@@ -10,8 +11,6 @@ const CIEXYZ = (function () {
     [-1.5371385, 1.8760108, -0.2040259],
     [-0.4985314, 0.0415560, 1.0572252]
   ]);
-
-  // const 
 
   return {
     // rgb: array
@@ -55,7 +54,7 @@ const CIEXYZ = (function () {
 
       // convert back to linear rgb
       mixed = this.ToLRGB(mixed);
-      
+
       // clamp
       for (let i = 0; i < 3; i++) {
         mixed[i] = mixed[i] > 1 ? 1 : mixed[i];
