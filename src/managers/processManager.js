@@ -32,23 +32,32 @@ const ProcessManager = (function () {
       const start = DOMManager.startColorPicker.color();
       const end = DOMManager.endColorPicker.color();
 
-      console.log(start);
-      console.log(end);
+      // console.log(start);
+      // console.log(end);
 
-      console.log(red(start));
+      // console.log(red(start));
 
       background(28);
 
       // drawColors(DOMManager.startColorPicker.color(), 10, DOMManager.domHeight);
 
+      const iLimit = Math.floor((windowWidth - squareSize - 20) / squareSize) + 1;
+
+      console.log(iLimit);
+
       for (let i = 0; i < DOMManager.colorCount.value(); i++) {
-        const posX = (squareSize * i) + 10;
-        const posY = DOMManager.domHeight;
         const t = i / (DOMManager.colorCount.value() - 1);
-
         const c = sRGB.mix(start, end, t);
-
-        drawColors(c, posX, posY);
+        
+        if (i < iLimit) {
+          const posX = (squareSize * i) + 10;
+          const posY = DOMManager.domHeight;
+          drawColors(c, posX, posY);
+        } else {
+          const posX = (squareSize * (i % iLimit)) + 10;
+          const posY = DOMManager.domHeight + squareSize * Math.floor(i / iLimit);
+          drawColors(c, posX, posY);
+        }
 
         // console.log(c);
       }

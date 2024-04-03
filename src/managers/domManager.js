@@ -13,7 +13,7 @@ const DOMManager = (function () {
       this.startColorPicker.position(10, 10);
       this.startColorPicker.size(50, 50);
 
-      this.endColorPicker = createColorPicker('royalblue');
+      this.endColorPicker = createColorPicker('navy');
       this.endColorPicker.position(70, 10);
       this.endColorPicker.size(50, 50);
 
