@@ -171,13 +171,17 @@ class Matrix {
 
       adjoint.cofactor3x3();
       adjoint.transpose();
-      console.log(adjoint);
+      // console.log(adjoint);
 
       const det = this.det3x3();
-      console.log(det);
+
+      if (det === 0) return;
+      // console.log(det);
 
       adjoint.scalar(1 / det);
-      console.log(adjoint);
+      // console.log(adjoint);
+
+      this.copy(adjoint);
     }
   }
 
