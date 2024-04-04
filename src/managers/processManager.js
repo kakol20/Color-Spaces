@@ -24,15 +24,23 @@ const ProcessManager = (function () {
     setup() {
       this.generatePalette();
 
-      let testRGB = [1, 1, 1];
-      console.log(testRGB);
+      // for testing
+      for (let r = 0; r <= 1; r++) {
+        for (let g = 0; g <= 1; g++) {
+          for (let b = 0; b <= 1; b++) {
+            let test = [r, g, b];
+            console.log(test);
 
-      let testXYZ = CIEXYZ.ToXYZ(testRGB);
-      console.log(testXYZ);
+            let xyz = CIEXYZ.ToXYZ(test);
+            console.log(xyz);
 
-      let testLab = JSON.parse(JSON.stringify(testXYZ));
-      testLab = OkLab.XYZtoLab(testXYZ);
-      console.log(testLab);
+            let lab = OkLab.XYZtoLab(xyz);
+            console.log(lab);
+
+            console.log('');
+          }
+        }
+      }
     },
 
     generatePalette() {
