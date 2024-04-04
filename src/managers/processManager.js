@@ -23,24 +23,6 @@ const ProcessManager = (function () {
 
     setup() {
       this.generatePalette();
-
-      // for testing
-      for (let r = 0; r <= 1; r++) {
-        for (let g = 0; g <= 1; g++) {
-          for (let b = 0; b <= 1; b++) {
-            let test = [r, g, b];
-            console.log(test);
-
-            let xyz = CIEXYZ.ToXYZ(test);
-            console.log(xyz);
-
-            let lab = OkLab.XYZtoLab(xyz);
-            console.log(lab);
-
-            console.log('');
-          }
-        }
-      }
     },
 
     generatePalette() {
