@@ -56,6 +56,9 @@ const ProcessManager = (function () {
           case 'CIE XYZ':
             c = CIEXYZ.mix(start, end, t);
             break;
+          case 'OkLab':
+            c = OkLab.mix(start, end, t);
+            break;
           default:
             c = sRGB.mix(start, end, t);
             break;

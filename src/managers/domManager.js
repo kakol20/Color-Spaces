@@ -9,11 +9,11 @@ const DOMManager = (function () {
     domHeight: 0,
 
     preload() {
-      this.startColorPicker = createColorPicker('deeppink');
+      this.startColorPicker = createColorPicker('navy');
       this.startColorPicker.position(10, 10);
       this.startColorPicker.size(50, 50);
 
-      this.endColorPicker = createColorPicker('navy');
+      this.endColorPicker = createColorPicker('hotpink');
       this.endColorPicker.position(70, 10);
       this.endColorPicker.size(50, 50);
 
@@ -22,6 +22,7 @@ const DOMManager = (function () {
       this.spaceSelect.option('sRGB');
       this.spaceSelect.option('Linear RGB');
       this.spaceSelect.option('CIE XYZ');
+      this.spaceSelect.option('OkLab');
 
       this.spaceSelect.selected('sRGB');
 
@@ -30,7 +31,7 @@ const DOMManager = (function () {
       colorCountText = createSpan(' Count: ');
       colorCountText.position(10, this.domHeight + 2);
 
-      this.colorCount = createInput(5, 'number');
+      this.colorCount = createInput(8, 'number');
       this.colorCount.size(50, 20);
       this.colorCount.position(colorCountText.width + 20, this.domHeight);
 
