@@ -6,11 +6,9 @@ const CIEXYZ = (function () {
     [0.1804375, 0.0721750, 0.9503041]
   ]);
 
-  const toRGBMat = new Matrix([
-    [3.2404542, -0.9692660, 0.0556434],
-    [-1.5371385, 1.8760108, -0.2040259],
-    [-0.4985314, 0.0415560, 1.0572252]
-  ]);
+  const toRGBMat = new Matrix();
+  toRGBMat.copy(toXYZMat);
+  toRGBMat.invert3x3();
 
   return {
     // rgb: array
