@@ -1,22 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Color Spaces - Gradient</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Color Spaces - Gradient</title>
 
-	<link rel="stylesheet" type="text/css" href="css/normalize.css">
-	<link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 
-	<script src="src/managers/processManager.js" defer></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-	<script src="src/managers/domManager.js" defer></script>
+  <script src="src/managers/processManager.js" defer></script>
 
-	<script src="src/managers/mainManager.js" defer></script>
+  <script src="src/managers/domManager.js" defer></script>
 
-	<script src="src/sketch.js" defer></script>
+  <script src="src/managers/mainManager.js" defer></script>
+
+  <script src="src/sketch.js" defer></script>
 </head>
+
 <body>
-	<main></main>
+  <input id="colorA" type="color" style="position: absolute; left: 10px; top: 10px; width: 50px; height: 50px;"
+    value="#ff0000">
+  <input id="colorB" type="color" style="position: absolute; left: 70px; top: 10px; width: 50px; height: 50px;"
+    value="#0000ff">
+
+  <select id="select" style="position: absolute; left: 10px; top: 70px;">
+    <option value="sRGB">sRGB</option>
+    <option value="Linear RGB">Linear RGB</option>
+    <option value="OkLab">OkLab</option>
+    <option value="Show All">Show All</option>
+  </select>
+
+  <span style="position: absolute; left: 10px; top: 103px;"> Count: </span>
+  <input id="countInput" value="8" type="number"
+    style="width: 50px; height: 20px; position: absolute; left: 64px; top: 101px;">
+  <button onclick="generate()" style="position: absolute; left: 10px; top: 135px;">Generate</button>
+
+  <div id="output">
+    <div style="position: absolute; left: 10px; top: 170px; background-color: blue; width: 50px; height: 50px;"></div>
+    <div style="position: absolute; left: 60px; top: 170px; background-color: red; width: 50px; height: 50px;"></div>
+  </div>
 </body>
+
 </html>

@@ -1,20 +1,8 @@
 const MainManager = (function () {
   return {
-    canvas: 0,
-
-    preload() {
-      DOMManager.preload();
-    },
-
     setup() {
-      pixelDensity(1);
-
-      this.canvas = createCanvas(windowWidth, windowHeight);
-      this.canvas.position(0, 0);
-
+      console.log("Setup Ran");
       ProcessManager.setup();
-
-      noLoop();
     },
 
     draw(dt) {
