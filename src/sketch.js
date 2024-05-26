@@ -51,9 +51,14 @@ function generate() {
     console.log('Box Width', boxWidth);
 
     // text area
-    let textArea = '<textarea style=\"position: absolute; left: 10px;';
-    textArea += ' top: ' + (top + 10 + boxHeight) + 'px;\"';
-    textArea += ' rows=\"' + (count + 1) + '\">';
+    let textArea = '<textarea wrap="off" id="textOut" style="position: absolute; left: 10px;';
+    textArea += ' height: auto; width: auto;';
+    // textArea += ' overflow-wrap: normal; overflow-x: scroll;'
+    textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
+    // textArea += ' rows=\"' + (count + 1) + '\">';
+    // textArea += ' style="height: auto;"';
+    textArea += '>';
+    let textAreaText = ['', ''];
 
     for (let i = 0; i < count; i++) {
       const t = i / (count - 1);
@@ -61,11 +66,19 @@ function generate() {
 
       const valLab = OkLab.mix(col1Lab, col2Lab, t);
       const valRGB = OkLab.OkLabtosRGB(valLab);
-      out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-      textArea += valRGB.CSSColor + '\n';
+      out += generateDiv(left, top, valLab.CSSColor, boxWidth, boxHeight);
+      // textArea += valRGB.CSSColor + ' - ' + valLab.CSSColor + '\n';
+
+      textAreaText[0] += valRGB.CSSColor + (i + 1 === count ? '' : '\n');
+      textAreaText[1] += valLab.CSSColor + (i + 1 === count ? '' : '\n');
     }
+    textArea += textAreaText[0] + '\n\n' + textAreaText[1];
     textArea += '</textarea>';
 
     $('#output').html(out + textArea);
+
+    $('#textOut').css('height', $('#textOut').prop('scrollHeight') + 'px');
+    $('#textOut').css('width', ($('#textOut').prop('scrollWidth') + 10) + 'px');
+
   }
 }

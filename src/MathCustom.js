@@ -17,6 +17,11 @@ class MathCustom {
     return ((numer % denom) + denom) % denom;
   }
 
+  static Round(numer, places = 0) {
+    const mult = Math.max(places, 0) === 0 ? 1 : Math.pow(10, places);
+    return Math.round((numer + Number.EPSILON) * mult) / mult;
+  }
+
   static TAU = Math.PI * 2;
   static DegToRad = Math.PI / 180;
 }

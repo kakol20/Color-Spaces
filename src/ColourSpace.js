@@ -77,6 +77,11 @@ class OkLab {
     return new OkLab(this.l, this.a, this.b);
   }
 
+  get CSSColor() {
+    const l = Math.max(Math.min(this.l, 1), 0);
+    return 'oklab(' + MathCustom.Round(l, 3) + ', ' + MathCustom.Round(this.a, 3) + ', ' + MathCustom.Round(this.b, 3) + ')';
+  }
+
   static mix(lab1, lab2, t) {
     let out = lab2.copy();
     out.sub(lab1);
