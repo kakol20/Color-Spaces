@@ -117,7 +117,6 @@ class OkLab {
     b2 = 0.0259040371 * l1 + 0.7827717662 * a1 - 0.8086757660 * b1;
 
     return new OkLab(l2, a2, b2);
-    // return new OkLab(MathCustom.Round(l2, 7), MathCustom.Round(a2, 7), MathCustom.Round(b2, 7));
   }
 
   static OkLabtosRGB(lab) {
@@ -146,7 +145,6 @@ class OkLab {
     b1 = b2 <= 0.00313058 ? 12.92 * b2 : (MathCustom.NRoot(b2, 2.4) * 1.055) - 0.055;
 
     return new sRGB(r1, g1, b1);
-    // return new sRGB(MathCustom.Round(r1, 7), MathCustom.Round(g1, 7), MathCustom.Round(b1, 7));
   }
 }
 
@@ -162,7 +160,6 @@ class OkLCh {
     const c = Math.sqrt(lab.a * lab.a + lab.b * lab.b);
     const h = MathCustom.UnsignedMod(Math.atan2(lab.b, lab.a), MathCustom.TAU);
     return new OkLCh(l, c, h);
-    // return new OkLCh(MathCustom.Round(l, 7), MathCustom.Round(c, 7), MathCustom.Round(h, 7));
   }
 
   static sRGBToOkLCh(srgb) {
@@ -174,7 +171,6 @@ class OkLCh {
     const a = lch.c * Math.cos(lch.h);
     const b = lch.c * Math.sin(lch.h);
     return new OkLab(l, a, b);
-    // return new OkLab(MathCustom.Round(l, 7), MathCustom.Round(a, 7), MathCustom.Round(b, 7));
   }
 
   static OkLChTosRGB(lch) {
