@@ -147,3 +147,61 @@ class OkLab {
     return new sRGB(r1, g1, b1);
   }
 }
+
+class OkLCh {
+  constructor(l = 0, c = 0, h = 0) {
+    this.l = l;
+    this.c = c;
+    this.h = h;
+  }
+
+  static LabToLCh(lab) {
+    const l = lab.l;
+    const c = Math.sqrt(lab.a * lab.a + lab.b * lab.b);
+    const h = MathCustom.UnsignedMod(Math.atan2(lab.b, lab.a), MathCustom.TAU);
+    return new OkLCh(l, c, h);
+  }
+
+  static sRGBToOkLCh(srgb) {
+    return OkLCh.LabToLCh(OkLab.sRGBtoOKLab(srgb));
+  }
+
+  static LChToLab(lch) {
+    const l = lch.l;
+    const a = lch.c * Math.cos(lch.h);
+    const b = lch.c * Math.sin(lch.h);
+    return new OkLab(l, a, b);
+  }
+
+  static OkLChTosRGB(lch) {
+    return OkLab.OkLabtosRGB(OkLCh.LChToLab(lch));
+  }
+
+  copy() {
+    return new OkLCh(this.l, this.c, this.h);
+  }
+
+  get isInside() {
+    return (OkLCh.sRGBToOkLCh(this)).isInside;
+  }
+
+  get CSSColor() {
+    const l = Math.max(Math.min(this.l, 1), 0);
+    const h = this.h * MathCustom.RadToDeg;
+    return 'oklch(' + MathCustom.Round(l, 3) + ', ' + MathCustom.Round(this.c, 3) + ', ' + MathCustom.Round(h, 3) + ')';
+  }
+
+  fallback(change = 0.001) {
+    this.l = Math.max(Math.min(this.l, 1), 0);
+    this.c = this.l === 0 || this.l === 1 ? 0 : this.c;
+
+    let current = OkLCh.OkLChTosRGB(this);
+    while (!current.isInside) {
+      this.c -= change;
+      this.c = Math.max(this.c, 0);
+
+      if (this.c === 0) break;
+      current = OkLCh.OkLChTosRGB(this);
+    }
+  }
+ }
