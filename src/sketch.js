@@ -68,18 +68,18 @@ function generate() {
         const valRGB = col1sRGB.copy();
 
         out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-        textAreaText[0] += valRGB.CSSColor + (i + 1 === count ? '' : '\n');
-        textAreaText[1] += valLab.CSSColor + (i + 1 === count ? '' : '\n');
-        textAreaText[2] += valLCh.CSSColor + (i + 1 === count ? '' : '\n');
+        textAreaText[0] += valRGB.CSSColor + '\n';
+        textAreaText[1] += valLab.CSSColor + '\n';
+        textAreaText[2] += valLCh.CSSColor + '\n';
       } else if (i === count - 1) {
         const valLab = col2Lab.copy();
         const valLCh = OkLCh.LabToLCh(valLab);
         const valRGB = col2sRGB.copy();
 
         out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-        textAreaText[0] += valRGB.CSSColor + (i + 1 === count ? '' : '\n');
-        textAreaText[1] += valLab.CSSColor + (i + 1 === count ? '' : '\n');
-        textAreaText[2] += valLCh.CSSColor + (i + 1 === count ? '' : '\n');
+        textAreaText[0] += valRGB.CSSColor;
+        textAreaText[1] += valLab.CSSColor;
+        textAreaText[2] += valLCh.CSSColor;
       } else {
         const t = i / (count - 1);
 
@@ -88,14 +88,13 @@ function generate() {
         valLCh.fallback();
 
         valLab = OkLCh.LChToLab(valLCh);
-        let valRGB = OkLab.OkLabtosRGB(valLab);
+        const valRGB = OkLab.OkLabtosRGB(valLab);
 
         out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-        // textArea += valRGB.CSSColor + ' - ' + valLab.CSSColor + '\n';
 
-        textAreaText[0] += valRGB.CSSColor + (i + 1 === count ? '' : '\n');
-        textAreaText[1] += valLab.CSSColor + (i + 1 === count ? '' : '\n');
-        textAreaText[2] += valLCh.CSSColor + (i + 1 === count ? '' : '\n');
+        textAreaText[0] += valRGB.CSSColor + '\n';
+        textAreaText[1] += valLab.CSSColor + '\n';
+        textAreaText[2] += valLCh.CSSColor + '\n';
       }
     }
     textArea += textAreaText[0] + '\n\n' + textAreaText[1] + '\n\n' + textAreaText[2];
