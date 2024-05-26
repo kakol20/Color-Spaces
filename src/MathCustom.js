@@ -24,4 +24,5 @@ class MathCustom {
 
   static TAU = Math.PI * 2;
   static DegToRad = Math.PI / 180;
+  static RadToDeg = 180 / Math.PI;
 }

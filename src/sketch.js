@@ -58,21 +58,46 @@ function generate() {
     // textArea += ' rows=\"' + (count + 1) + '\">';
     // textArea += ' style="height: auto;"';
     textArea += '>';
-    let textAreaText = ['', ''];
+    let textAreaText = ['', '', ''];
 
     for (let i = 0; i < count; i++) {
-      const t = i / (count - 1);
       const left = 10 + (i * boxWidth);
+      if (i === 0) {
+        const valLab = col1Lab.copy();
+        const valLCh = OkLCh.LabToLCh(valLab);
+        const valRGB = col1sRGB.copy();
 
-      const valLab = OkLab.mix(col1Lab, col2Lab, t);
-      const valRGB = OkLab.OkLabtosRGB(valLab);
-      out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-      // textArea += valRGB.CSSColor + ' - ' + valLab.CSSColor + '\n';
+        out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
+        textAreaText[0] += valRGB.CSSColor + '\n';
+        textAreaText[1] += valLab.CSSColor + '\n';
+        textAreaText[2] += valLCh.CSSColor + '\n';
+      } else if (i === count - 1) {
+        const valLab = col2Lab.copy();
+        const valLCh = OkLCh.LabToLCh(valLab);
+        const valRGB = col2sRGB.copy();
 
-      textAreaText[0] += valRGB.CSSColor + (i + 1 === count ? '' : '\n');
-      textAreaText[1] += valLab.CSSColor + (i + 1 === count ? '' : '\n');
+        out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
+        textAreaText[0] += valRGB.CSSColor;
+        textAreaText[1] += valLab.CSSColor;
+        textAreaText[2] += valLCh.CSSColor;
+      } else {
+        const t = i / (count - 1);
+
+        let valLab = OkLab.mix(col1Lab, col2Lab, t);
+        let valLCh = OkLCh.LabToLCh(valLab);
+        valLCh.fallback();
+
+        valLab = OkLCh.LChToLab(valLCh);
+        const valRGB = OkLab.OkLabtosRGB(valLab);
+
+        out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
+
+        textAreaText[0] += valRGB.CSSColor + '\n';
+        textAreaText[1] += valLab.CSSColor + '\n';
+        textAreaText[2] += valLCh.CSSColor + '\n';
+      }
     }
-    textArea += textAreaText[0] + '\n\n' + textAreaText[1];
+    textArea += textAreaText[0] + '\n\n' + textAreaText[1] + '\n\n' + textAreaText[2];
     textArea += '</textarea>';
 
     $('#output').html(out + textArea);
