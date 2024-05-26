@@ -97,12 +97,9 @@ class OkLab {
     let b1 = srgb.b;
 
     // to Linear RGB
-    // l1 = l1 <= 0.04045 ? l1 / 12.92 : Math.pow((l1 + 0.055) / 1.055, 2.4);
-    // a1 = a1 <= 0.04045 ? a1 / 12.92 : Math.pow((a1 + 0.055) / 1.055, 2.4);
-    // b1 = b1 <= 0.04045 ? b1 / 12.92 : Math.pow((b1 + 0.055) / 1.055, 2.4);
-    l1 = Math.pow(l1, 2.2);
-    a1 = Math.pow(a1, 2.2);
-    b1 = Math.pow(b1, 2.2);
+    l1 = l1 <= 0.04045 ? l1 / 12.92 : Math.pow((l1 + 0.055) / 1.055, 2.4);
+    a1 = a1 <= 0.04045 ? a1 / 12.92 : Math.pow((a1 + 0.055) / 1.055, 2.4);
+    b1 = b1 <= 0.04045 ? b1 / 12.92 : Math.pow((b1 + 0.055) / 1.055, 2.4);
 
     // to Linear LMS
     let l2 = 0.41224204990 * l1 + 0.5362616219 * a1 + 0.05142804289 * b1;
@@ -144,12 +141,9 @@ class OkLab {
     b2 = -0.004197563774 * r1 - 0.7035684095 * g1 + 1.7072056180 * b1;
 
     // to sRGB
-    // r1 = r1 <= 0.00313058 ? 12.92 * r1 : (MathCustom.NRoot(r1, 2.4) * 1.055) - 0.055;
-    // g1 = g1 <= 0.00313058 ? 12.92 * g1 : (MathCustom.NRoot(g1, 2.4) * 1.055) - 0.055;
-    // b1 = b1 <= 0.00313058 ? 12.92 * b1 : (MathCustom.NRoot(b1, 2.4) * 1.055) - 0.055;
-    r1 = MathCustom.NRoot(r1, 2.2);
-    g1 = MathCustom.NRoot(g1, 2.2);
-    b1 = MathCustom.NRoot(b1, 2.2);
+    r1 = r2 <= 0.00313058 ? 12.92 * r2 : (MathCustom.NRoot(r2, 2.4) * 1.055) - 0.055;
+    g1 = g2 <= 0.00313058 ? 12.92 * g2 : (MathCustom.NRoot(g2, 2.4) * 1.055) - 0.055;
+    b1 = b2 <= 0.00313058 ? 12.92 * b2 : (MathCustom.NRoot(b2, 2.4) * 1.055) - 0.055;
 
     return new sRGB(r1, g1, b1);
     // return new sRGB(MathCustom.Round(r1, 7), MathCustom.Round(g1, 7), MathCustom.Round(b1, 7));
