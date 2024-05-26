@@ -66,7 +66,7 @@ function generate() {
 
       const valLab = OkLab.mix(col1Lab, col2Lab, t);
       const valRGB = OkLab.OkLabtosRGB(valLab);
-      out += generateDiv(left, top, valLab.CSSColor, boxWidth, boxHeight);
+      out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
       // textArea += valRGB.CSSColor + ' - ' + valLab.CSSColor + '\n';
 
       textAreaText[0] += valRGB.CSSColor + (i + 1 === count ? '' : '\n');
