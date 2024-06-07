@@ -24,6 +24,24 @@ class sRGB {
     this.g *= s;
     this.b *= s;
   }
+  add(other) {
+    this.r += other.r;
+    this.g += other.g;
+    this.b += other.b;
+  }
+  sub(other) {
+    this.r -= other.r;
+    this.g -= other.g;
+    this.b -= other.b;
+  }
+
+  static mix(rgb1, rgb2, t) {
+    let out = rgb2.copy();
+    out.sub(rgb1);
+    out.mult(t);
+    out.add(rgb1);
+    return out.copy();
+  }
 
   get CSSColor() {
     let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
@@ -135,7 +153,7 @@ class OkLab {
     b1 = b2 * b2 * b2;
 
     // to Linear RGB
-    r2 =  4.07653881638861 * r1 - 3.30709682773943 * g1 + 0.23082245163012 * b1;
+    r2 = 4.07653881638861 * r1 - 3.30709682773943 * g1 + 0.23082245163012 * b1;
     g2 = -1.26860625095165 * r1 + 2.60974767679763 * g1 - 0.34116363525495 * b1;
     b2 = -0.00419756377401 * r1 - 0.70356840947339 * g1 + 1.70720561792434 * b1;
 
@@ -204,4 +222,4 @@ class OkLCh {
       current = OkLCh.OkLChTosRGB(this);
     }
   }
- }
+}
