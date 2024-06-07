@@ -29,6 +29,9 @@ function generate() {
     const col2Lab = OkLab.sRGBtoOKLab(col2sRGB);
     console.log('Colour 2 OkLab', col2Lab);
 
+    const mixType = $('#select').val();
+    console.log('Mix Type', mixType);
+
     const maxWidth = window.innerWidth - 20;
     const boxHeight = 50;
     const defaultBoxWidth = 50;
@@ -53,10 +56,7 @@ function generate() {
     // text area
     let textArea = '<textarea wrap="off" id="textOut" style="position: absolute; left: 10px;';
     textArea += ' height: auto; width: auto;';
-    // textArea += ' overflow-wrap: normal; overflow-x: scroll;'
     textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
-    // textArea += ' rows=\"' + (count + 1) + '\">';
-    // textArea += ' style="height: auto;"';
     textArea += '>';
     let textAreaText = ['', '', ''];
 
@@ -82,13 +82,22 @@ function generate() {
         textAreaText[2] += valLCh.CSSColor;
       } else {
         const t = i / (count - 1);
+        let valLab, valLCh, valRGB;
+        switch (mixType) {
+          case 'sRGB':
+            valRGB = sRGB.mix(col1sRGB, col2sRGB, t);
+            valLab = OkLab.sRGBtoOKLab(valRGB);
+            valLCh = OkLCh.LabToLCh(valLab);
+            break;
+          default:
+            // Default to OkLab
+            valLab = OkLab.mix(col1Lab, col2Lab, t);
+            valLCh = OkLCh.LabToLCh(valLab);
+            valLCh.fallback();
 
-        let valLab = OkLab.mix(col1Lab, col2Lab, t);
-        let valLCh = OkLCh.LabToLCh(valLab);
-        valLCh.fallback();
-
-        valLab = OkLCh.LChToLab(valLCh);
-        const valRGB = OkLab.OkLabtosRGB(valLab);
+            valLab = OkLCh.LChToLab(valLCh);
+            valRGB = OkLab.OkLabtosRGB(valLab);
+        }
 
         out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
 
@@ -104,6 +113,5 @@ function generate() {
 
     $('#textOut').css('height', $('#textOut').prop('scrollHeight') + 'px');
     $('#textOut').css('width', ($('#textOut').prop('scrollWidth') + 10) + 'px');
-
   }
 }
