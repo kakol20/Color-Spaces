@@ -94,7 +94,7 @@ function generate() {
             // Default to OkLab
             valLab = OkLab.mix(col1Lab, col2Lab, t);
             valLCh = OkLCh.LabToLCh(valLab);
-            // valLCh.fallback();
+            valLCh.fallback();
 
             valLab = OkLCh.LChToLab(valLCh);
             valRGB = OkLab.OkLabtosRGB(valLab);
