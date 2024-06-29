@@ -69,8 +69,8 @@ class sRGB {
 class OkLab {
   constructor(l = 0, a = 0, b = 0) {
     this.l = l;
-    this.a = a;
-    this.b = b;
+    this.a = this.l <= 0 || this.l >= 1 ? 0 : a;
+    this.b = this.l <= 0 || this.l >= 1 ? 0 : b;
   }
 
   mult(s) {
@@ -169,8 +169,8 @@ class OkLab {
 class OkLCh {
   constructor(l = 0, c = 0, h = 0) {
     this.l = l;
-    this.c = c;
-    this.h = h;
+    this.c = this.l <= 0 || this.l >= 1 ? 0 : c;
+    this.h = this.c <= 0 ? 0 : h;
   }
 
   static LabToLCh(lab) {
