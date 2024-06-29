@@ -200,7 +200,7 @@ class OkLCh {
   }
 
   get isInside() {
-    return (OkLCh.sRGBToOkLCh(this)).isInside;
+    return (OkLCh.OkLChTosRGB(this)).isInside;
   }
 
   get CSSColor() {
@@ -213,7 +213,7 @@ class OkLCh {
     this.l = Math.max(Math.min(this.l, 1), 0);
     this.c = this.l === 0 || this.l === 1 ? 0 : this.c;
 
-    let current = OkLCh.OkLChTosRGB(this.copy());
+    let current = OkLCh.OkLChTosRGB(this);
     while (!current.isInside) {
       this.c -= change;
       this.c = Math.max(this.c, 0);

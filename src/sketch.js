@@ -61,7 +61,8 @@ function generate() {
     let textAreaText = ['', '', ''];
 
     for (let i = 0; i < count; i++) {
-      const left = 10 + (i * boxWidth);
+      // const left = 10 + (i * boxWidth);
+      const left = Math.floor(10 + (i * boxWidth));
       if (i === 0) {
         const valLab = col1Lab.copy();
         const valLCh = OkLCh.LabToLCh(valLab);
@@ -93,7 +94,7 @@ function generate() {
             // Default to OkLab
             valLab = OkLab.mix(col1Lab, col2Lab, t);
             valLCh = OkLCh.LabToLCh(valLab);
-            valLCh.fallback();
+            // valLCh.fallback();
 
             valLab = OkLCh.LChToLab(valLCh);
             valRGB = OkLab.OkLabtosRGB(valLab);
