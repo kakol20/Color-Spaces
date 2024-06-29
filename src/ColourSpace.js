@@ -209,17 +209,26 @@ class OkLCh {
     return 'oklch(' + MathCustom.Round(l, 3) + ', ' + MathCustom.Round(this.c, 3) + ', ' + MathCustom.Round(h, 3) + ')';
   }
 
-  fallback(change = 0.001) {
-    this.l = Math.max(Math.min(this.l, 1), 0);
-    this.c = this.l === 0 || this.l === 1 ? 0 : this.c;
+  rgbClamp() {
+    let rgb = OkLCh.OkLChTosRGB(this);
+    rgb.clamp();
+    let newLCh = OkLCh.sRGBToOkLCh(rgb);
+    this.l = newLCh.l;
+    this.c = newLCh.c;
+    this.h = newLCh.h;
+  }
 
-    let current = OkLCh.OkLChTosRGB(this);
-    while (!current.isInside) {
-      this.c -= change;
-      this.c = Math.max(this.c, 0);
+  fallback(maxIterations = 5) {
+    let iter = 0;
+    let ogL = this.l;
+    while (iter < maxIterations) {
+      this.rgbClamp();
 
-      if (this.c === 0) break;
-      current = OkLCh.OkLChTosRGB(this);
+      this.l = ogL;
+
+      iter++;
+
+      if (this.isInside) break;
     }
   }
 }
