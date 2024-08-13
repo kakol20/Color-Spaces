@@ -90,6 +90,17 @@ function generate() {
             valLab = OkLab.sRGBtoOKLab(valRGB);
             valLCh = OkLCh.LabToLCh(valLab);
             break;
+          case 'Linear RGB':
+            {
+              const col1LRGB = LinearRGB.sRGBToLinear(col1sRGB);
+              const col2LRGB = LinearRGB.sRGBToLinear(col2sRGB);
+              const mix = LinearRGB.mix(col1LRGB, col2LRGB, t);
+
+              valRGB = LinearRGB.LinearTosRGB(mix);
+            }
+            valLab = OkLab.sRGBtoOKLab(valRGB);
+            valLCh = OkLCh.LabToLCh(valLab);
+            break;
           default:
             // Default to OkLab
             valLab = OkLab.mix(col1Lab, col2Lab, t);

@@ -66,6 +66,106 @@ class sRGB {
   }
 }
 
+class LinearRGB {
+  constructor(r = 0, g = 0, b = 0) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  clamp() {
+    this.r = Math.max(Math.min(this.r, 1), 0);
+    this.g = Math.max(Math.min(this.g, 1), 0);
+    this.b = Math.max(Math.min(this.b, 1), 0);
+  }
+
+  get isInside() {
+    return this.r <= 1 && this.r >= 0 && this.g <= 1 && this.g >= 0 && this.b <= 1 && this.b >= 0
+  }
+
+  copy() {
+    return new LinearRGB(this.r, this.g, this.b);
+  }
+
+  mult(s) {
+    this.r *= s;
+    this.g *= s;
+    this.b *= s;
+  }
+  add(other) {
+    this.r += other.r;
+    this.g += other.g;
+    this.b += other.b;
+  }
+  sub(other) {
+    this.r -= other.r;
+    this.g -= other.g;
+    this.b -= other.b;
+  }
+
+  static mix(rgb1, rgb2, t) {
+    let out = rgb2.copy();
+    out.sub(rgb1);
+    out.mult(t);
+    out.add(rgb1);
+    return out.copy();
+  }
+
+  get CSSColor() {
+    let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
+    let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
+    let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
+    return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
+  }
+
+  static HexTosRGB(hex) {
+    const hexStr = hex.substring(1);
+    const hexInt = Number('0x' + hexStr);
+
+    const rMask = 0xFF0000;
+    const gMask = 0x00FF00;
+    const bMask = 0x0000FF;
+
+    const rVal = ((hexInt & rMask) >> 16) / 255;
+    const gVal = ((hexInt & gMask) >> 8) / 255;
+    const bVal = (hexInt & bMask) / 255;
+
+    return new LinearRGB(rVal, gVal, bVal);
+  }
+
+  static #Scalar = 387916 / 30017;
+  static #ToLinearLimit = 11 / 280;
+  static #TosRGBLimit = 285 / 93752;
+
+  static #ToLinear(x) {
+    return x <= this.#ToLinearLimit ?
+      x / this.#Scalar :
+      Math.pow((x + 0.055) / 1.055, 2.4);
+  }
+
+  static #TosRGB(x) {
+    return x <= this.#TosRGBLimit ?
+      x * this.#Scalar :
+      (MathCustom.NRoot(x, 2.4) * 1.055) - 0.055;
+  }
+
+  static sRGBToLinear(srgb) {
+    return new LinearRGB(
+      this.#ToLinear(srgb.r),
+      this.#ToLinear(srgb.g),
+      this.#ToLinear(srgb.b)
+    );
+  }
+
+  static LinearTosRGB(lrgb) {
+    return new sRGB(
+      this.#TosRGB(lrgb.r),
+      this.#TosRGB(lrgb.g),
+      this.#TosRGB(lrgb.b)
+    );
+  }
+}
+
 class OkLab {
   constructor(l = 0, a = 0, b = 0) {
     this.l = l;
