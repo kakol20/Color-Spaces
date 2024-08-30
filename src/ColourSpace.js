@@ -197,7 +197,7 @@ class OkLab {
 
 	get CSSColor() {
 		const l = Math.max(Math.min(this.l, 1), 0);
-		return 'oklab(' + MathCustom.Round(l, 3) + ', ' + MathCustom.Round(this.a, 3) + ', ' + MathCustom.Round(this.b, 3) + ')';
+		return 'oklab(' + MathCustom.Round(l, 4) + ', ' + MathCustom.Round(this.a, 4) + ', ' + MathCustom.Round(this.b, 4) + ')';
 	}
 
 	static mix(lab1, lab2, t) {
@@ -240,9 +240,9 @@ class OkLab {
 			b1 = b1 <= this.#ToLinearLimit ? b1 / this.#Scalar : Math.pow((b1 + 0.055) / 1.055, 2.4);
 
 			// to LMS
-			let l2 = 0.4122214708 * l1 + 0.5363325363 * a1 + 0.0514459929 * b1;
-			let a2 = 0.2119034982 * l1 + 0.6806995451 * a1 + 0.1073969566 * b1;
-			let b2 = 0.0883024619 * l1 + 0.2817188376 * a1 + 0.6299787005 * b1;
+			let l2 = 0.412221470800 * l1 + 0.536332536300 * a1 + 0.051445992900 * b1;
+			let a2 = 0.211903498234 * l1 + 0.680699545133 * a1 + 0.107396956633 * b1;
+			let b2 = 0.088302461900 * l1 + 0.281718837600 * a1 + 0.629978700500 * b1;
 
 			// to Linear LMS
 			l1 = Math.cbrt(l2);
@@ -250,9 +250,9 @@ class OkLab {
 			b1 = Math.cbrt(b2);
 
 			// to OkLab
-			l2 = 0.2104542553 * l1 + 0.7936177850 * a1 - 0.0040720468 * b1;
-			a2 = 1.9779984951 * l1 - 2.4285922050 * a1 + 0.4505937099 * b1;
-			b2 = 0.0259040371 * l1 + 0.7827717662 * a1 - 0.8086757660 * b1;
+			l2 = 0.210454257467 * l1 + 0.793617787167 * a1 - 0.004072044634 * b1;
+			a2 = 1.977998495100 * l1 - 2.428592205000 * a1 + 0.450593709900 * b1;
+			b2 = 0.025904024666 * l1 + 0.782771753767 * a1 - 0.808675778433 * b1;
 
 			return new OkLab(l2, a2, b2);
 		}
@@ -279,9 +279,9 @@ class OkLab {
 			let b1 = lab.b
 
 			// to Linear LMS
-			let r2 = r1 + 0.3963377774 * g1 + 0.2158037573 * b1;
-			let g2 = r1 - 0.1055613458 * g1 - 0.0638541728 * b1;
-			let b2 = r1 - 0.0894841775 * g1 - 1.2914855480 * b1;
+			let r2 = r1 + 0.396337792278 * g1 + 0.215803757471 * b1;
+			let g2 = r1 - 0.105561342920 * g1 - 0.063854171399 * b1;
+			let b2 = r1 - 0.089484185764 * g1 - 1.291485517099 * b1;
 
 			// to LMS
 			r1 = r2 * r2 * r2;
@@ -289,9 +289,9 @@ class OkLab {
 			b1 = b2 * b2 * b2;
 
 			// to Linear RGB
-			r2 = 4.0767416621 * r1 - 3.3077115913 * g1 + 0.2309699292 * b1;
-			g2 = -1.2684380046 * r1 + 2.6097574011 * g1 - 0.3413193965 * b1;
-			b2 = -0.0041960863 * r1 - 0.7034186147 * g1 + 1.7076147010 * b1;
+			r2 =  4.076741661667 * r1 - 3.307711590572 * g1 + 0.230969928905 * b1;
+			g2 = -1.268438004344 * r1 + 2.609757400792 * g1 - 0.341319396448 * b1;
+			b2 = -0.004196086474 * r1 - 0.703418614494 * g1 + 1.707614700968 * b1;
 
 			// to sRGB
 			r1 = r2 <= this.#TosRGBLimit ? this.#Scalar * r2 : (MathCustom.NRoot(r2, 2.4) * 1.055) - 0.055;
@@ -353,7 +353,7 @@ class OkLCh {
 	get CSSColor() {
 		const l = Math.max(Math.min(this.l, 1), 0);
 		const h = this.h * MathCustom.RadToDeg;
-		return 'oklch(' + MathCustom.Round(l, 3) + ', ' + MathCustom.Round(this.c, 3) + ', ' + MathCustom.Round(h, 3) + ')';
+		return 'oklch(' + MathCustom.Round(l, 4) + ', ' + MathCustom.Round(this.c, 4) + ', ' + MathCustom.Round(h, 4) + ')';
 	}
 
 	rgbClamp() {
