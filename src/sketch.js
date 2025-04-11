@@ -92,8 +92,8 @@ function generate() {
 						break;
 					case 'Linear RGB':
 						{
-							const col1LRGB = new LinearRGB(col1sRGB.r, col1RGB.g, col1sRGB.b);
-							const col2LRGB = new LinearRGB(col2sRGB.r, col2RGB.g, col2sRGB.b);
+							const col1LRGB = LinearRGB.sRGBToLinear(col1sRGB);
+							const col2LRGB = LinearRGB.sRGBToLinear(col2sRGB);
 							const mix = LinearRGB.mix(col1LRGB, col2LRGB, t);
 
 							valRGB = LinearRGB.LinearTosRGB(mix);
