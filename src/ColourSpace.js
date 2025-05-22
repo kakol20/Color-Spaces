@@ -133,9 +133,9 @@ class LinearRGB {
 		return new LinearRGB(rVal, gVal, bVal);
 	}
 
-	static #Scalar = 387916 / 30017;
-	static #ToLinearLimit = 11 / 280;
-	static #TosRGBLimit = 285 / 93752;
+	static #Scalar = 12.92;
+	static #ToLinearLimit = 0.04045;
+	static #TosRGBLimit = 0.0031308;
 
 	static #ToLinear(x) {
 		return x <= this.#ToLinearLimit ?
