@@ -8,7 +8,8 @@
 body {
 	font-family: 'Open Sans';
 
-	padding: 15px;
+	padding: 0;
+	margin: 0;
 	/* line-height: 1.75; */
 
 	background-color: color-mix(in oklab, Canvas, CanvasText 2.5%);
