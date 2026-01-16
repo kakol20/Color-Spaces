@@ -117,7 +117,9 @@ function generate() {
 		$('#textOut').css('width', ($('#textOut').prop('scrollWidth') + 10) + 'px');
 
 		// Resize canvas in case window size gets changed
-		const cnvWidth = document.documentElement.clientWidth - 20;
+		let cnvWidth = document.documentElement.clientWidth - 20;
+		if (count * 50 < cnvWidth) cnvWidth = count * 50;
+
 		const cnvHeight = 50;
 		resizeCanvas(cnvWidth, cnvHeight, true);
 		background(255);
