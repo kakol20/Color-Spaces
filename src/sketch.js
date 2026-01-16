@@ -1,24 +1,38 @@
-$(document).ready(function () {
-	generate();
-});
+function setup() {
+	const cnvWidth = document.documentElement.clientWidth - 20;
+	const cnvHeight = 50;
+	let cnv = createCanvas(cnvWidth, cnvHeight);
 
-function generateDiv(left, top, bg_col, width, height) {
-	let out = '<div style=\"position: absolute;';
-	out += ' left: ' + Math.round(left) + 'px;';
-	out += ' top: ' + Math.round(top) + 'px;';
-	out += ' background-color: ' + bg_col + ';';
-	out += ' width: ' + Math.round(width) + 'px;';
-	out += ' height: ' + Math.round(height) + 'px;';
-	out += '\"></div>';
-	return out;
+	// cnv.position(10, 170);
+	cnv.position(10, 135);
+
+	noLoop();
+
+	addEventListener("change", () => {
+		generate();
+	})
+}
+
+function GetIndex(x, y, w) {
+	return 4 * (x + y * w);
+}
+
+function draw() {
+	generate();
 }
 
 function generate() {
+	const boxHeight = 50;
+	const top = 135;
+
 	// console.log('Generate Button Pressed');
+	console.clear();
+
 	const count = $('#countInput').val() * 1;
 	console.log('Count', count);
 
 	if (count >= 2) {
+		// Do gradient
 		const col1sRGB = sRGB.HexTosRGB($('#colorA').val());
 		console.log('Colour 1 sRGB', col1sRGB);
 		const col1Lab = OkLab.sRGBtoOKLab(col1sRGB);
@@ -32,92 +46,68 @@ function generate() {
 		const mixType = $('#select').val();
 		console.log('Mix Type', mixType);
 
-		const maxWidth = window.innerWidth - 20;
-		const boxHeight = 50;
-		const defaultBoxWidth = 50;
-
-		// console.log(col1sRGB.CSSColor);
-		// console.log(col2sRGB.CSSColor);
-
-		console.log('Max Width', maxWidth);
-		console.log('Box Height', boxHeight);
-
-		// console.log(generateDiv(10, 170, col1sRGB.CSSColor, 50, 50));
+		let palette = [];
 
 		// ----- GENERATE PALETTE -----
+		for (let i = 0; i < count; i++) {
+			const t = i / (count - 1);
+
+			if (i === 0) {
+				palette.push(col1sRGB);
+			} else if (i === count - 1) {
+				palette.push(col2sRGB);
+			} else {
+				switch (mixType) {
+					case 'sRGB':
+						const sr = col1sRGB.r * (1 - t) + col2sRGB.r * t;
+						const sg = col1sRGB.g * (1 - t) + col2sRGB.g * t;
+						const sb = col1sRGB.b * (1 - t) + col2sRGB.b * t;
+						palette.push(new sRGB(sr, sg, sb));
+						break;
+					case 'OkLab':
+						const mixLab = OkLab.mix(col1Lab, col2Lab, t);
+						const mixsRGB = OkLab.OkLabtosRGB(mixLab);
+						palette.push(mixsRGB);
+						break;
+					case 'Linear RGB':
+						const col1Lin = LinearRGB.sRGBToLinear(col1sRGB);
+						const col2Lin = LinearRGB.sRGBToLinear(col2sRGB);
+						const lr = col1Lin.r * (1 - t) + col2Lin.r * t;
+						const lg = col1Lin.g * (1 - t) + col2Lin.g * t;
+						const lb = col1Lin.b * (1 - t) + col2Lin.b * t;
+						palette.push(LinearRGB.LinearTosRGB(new LinearRGB(lr, lg, lb)));
+						break;
+					default:
+						console.error('Unknown mix type: ' + mixType);
+				}
+			}
+		}
+
+		// ----- TEXT OUTPUT -----
 
 		let out = '';
-		// let out = generateDiv(10, 170, col1sRGB.CSSColor, defaultBoxWidth, boxHeight);
-		const top = 170;
 
-		const boxWidth = defaultBoxWidth * count > maxWidth ? Math.floor(maxWidth / count) : defaultBoxWidth;
-		console.log('Box Width', boxWidth);
-
-		// text area
 		let textArea = '<textarea wrap="off" id="textOut" style="position: absolute; left: 10px;';
 		textArea += ' height: auto; width: auto;';
 		textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
 		textArea += '>';
 		let textAreaText = ['', '', ''];
 
-		for (let i = 0; i < count; i++) {
-			// const left = 10 + (i * boxWidth);
-			const left = Math.floor(10 + (i * boxWidth));
-			if (i === 0) {
-				const valLab = col1Lab.copy();
-				const valLCh = OkLCh.LabToLCh(valLab);
-				const valRGB = col1sRGB.copy();
+		for (let i = 0; i < palette.length; ++i) {
+			const valRGB = palette[i];
+			const valLab = OkLab.sRGBtoOKLab(valRGB);
+			const valLCh = OkLCh.LabToLCh(valLab);
+			textAreaText[0] += valRGB.CSSColor;
+			textAreaText[1] += valLab.CSSColor;
+			textAreaText[2] += valLCh.CSSColor;
 
-				out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-				textAreaText[0] += valRGB.CSSColor + '\n';
-				textAreaText[1] += valLab.CSSColor + '\n';
-				textAreaText[2] += valLCh.CSSColor + '\n';
-			} else if (i === count - 1) {
-				const valLab = col2Lab.copy();
-				const valLCh = OkLCh.LabToLCh(valLab);
-				const valRGB = col2sRGB.copy();
-
-				out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-				textAreaText[0] += valRGB.CSSColor;
-				textAreaText[1] += valLab.CSSColor;
-				textAreaText[2] += valLCh.CSSColor;
-			} else {
-				const t = i / (count - 1);
-				let valLab, valLCh, valRGB;
-				switch (mixType) {
-					case 'sRGB':
-						valRGB = sRGB.mix(col1sRGB, col2sRGB, t);
-						valLab = OkLab.sRGBtoOKLab(valRGB);
-						valLCh = OkLCh.LabToLCh(valLab);
-						break;
-					case 'Linear RGB':
-						{
-							const col1LRGB = LinearRGB.sRGBToLinear(col1sRGB);
-							const col2LRGB = LinearRGB.sRGBToLinear(col2sRGB);
-							const mix = LinearRGB.mix(col1LRGB, col2LRGB, t);
-
-							valRGB = LinearRGB.LinearTosRGB(mix);
-						}
-						valLab = OkLab.sRGBtoOKLab(valRGB);
-						valLCh = OkLCh.LabToLCh(valLab);
-						break;
-					default:
-						// Default to OkLab
-						valLab = OkLab.mix(col1Lab, col2Lab, t);
-						valLCh = OkLCh.LabToLCh(valLab);
-						valLCh.fallback();
-
-						valLab = OkLCh.LChToLab(valLCh);
-						valRGB = OkLab.OkLabtosRGB(valLab);
-				}
-
-				out += generateDiv(left, top, valRGB.CSSColor, boxWidth, boxHeight);
-
-				textAreaText[0] += valRGB.CSSColor + '\n';
-				textAreaText[1] += valLab.CSSColor + '\n';
-				textAreaText[2] += valLCh.CSSColor + '\n';
+			if (i < palette.length - 1) {
+				textAreaText[0] += "\n";
+				textAreaText[1] += "\n";
+				textAreaText[2] += "\n";
 			}
 		}
+
 		textArea += textAreaText[0] + '\n\n' + textAreaText[1] + '\n\n' + textAreaText[2];
 		textArea += '</textarea>';
 
@@ -125,5 +115,41 @@ function generate() {
 
 		$('#textOut').css('height', $('#textOut').prop('scrollHeight') + 'px');
 		$('#textOut').css('width', ($('#textOut').prop('scrollWidth') + 10) + 'px');
+
+		// Resize canvas in case window size gets changed
+		const cnvWidth = document.documentElement.clientWidth - 20;
+		const cnvHeight = 50;
+		resizeCanvas(cnvWidth, cnvHeight, true);
+		background(255);
+
+		// ----- DRAW PALETTE -----
+		const pixD = pixelDensity();
+
+		// Calculate Scaling Values
+		// const scaleX = (width - pixD) / count;
+		// const targetWidth = Math.floor(count * scaleX);
+		// const scaleXint = Math.ceil(targetWidth / count);
+
+		loadPixels();
+		for (let x = 0; x < width * pixD; ++x) {
+			const palIndex = Math.floor((x * count) / (width * pixD));
+
+			const output = palette[palIndex];
+
+			for (let y = 0; y < height * pixD; ++y) {
+				const index = GetIndex(x, y, width * pixD);
+
+				pixels[index + 0] = output.r * 255;
+				pixels[index + 1] = output.g * 255;
+				pixels[index + 2] = output.b * 255;
+			}
+		}
+		updatePixels();
+	} else {
+		// Just show first colour
+		const col1sRGB = sRGB.HexTosRGB($('#colorA').val());
+		console.log('Colour 1 sRGB', col1sRGB);
+
+		background($('#colorA').val());
 	}
 }

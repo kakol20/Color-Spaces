@@ -17,6 +17,10 @@ body {
 	color-scheme: light dark;
 }
 
+canvas {
+  display: block;
+}
+
 textarea {
 	width: 95%;
 }
