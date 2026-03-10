@@ -44,15 +44,15 @@ class sRGB {
 	}
 
 	get CSSColor() {
-		function clamp(v, min, max) {
-			return Math.min(Math.max(v, min), max);
+		function clamp255(v) {
+			return Math.min(Math.max(v, 0), 255);
 		}
 		//let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
 		//let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
 		//let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
-		let rVal = clamp(Math.floor(this.r * 256), 0, 255);
-		let gVal = clamp(Math.floor(this.g * 256), 0, 255);
-		let bVal = clamp(Math.floor(this.b * 256), 0, 255);
+		let rVal = clamp255(Math.floor(this.r * 256));
+		let gVal = clamp255(Math.floor(this.g * 256));
+		let bVal = clamp255(Math.floor(this.b * 256));
 		return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
 	}
 
