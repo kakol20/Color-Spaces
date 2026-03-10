@@ -80,7 +80,8 @@ class LinearRGB {
 	}
 
 	clamp() {
-		this.r = Math.max(Math.min(this.r, 1), 0)		this.g = Math.max(Math.min(this.g, 1), 0);
+		this.r = Math.max(Math.min(this.r, 1), 0);
+		this.g = Math.max(Math.min(this.g, 1), 0);
 		this.b = Math.max(Math.min(this.b, 1), 0);
 	}
 
@@ -117,9 +118,15 @@ class LinearRGB {
 	}
 
 	get CSSColor() {
-		let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
-		let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
-		let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
+		function clamp255(v) {
+			return Math.min(Math.max(v, 0), 255);
+		}
+		//let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
+		//let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
+		//let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
+		let rVal = clamp255(Math.floor(this.r * 256));
+		let gVal = clamp255(Math.floor(this.g * 256));
+		let bVal = clamp255(Math.floor(this.b * 256));
 		return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
 	}
 
@@ -214,9 +221,9 @@ class OkLab {
 		return out.copy();
 	}
 
-	static #Scalar = 387916 / 30017;
-	static #ToLinearLimit = 11 / 280;
-	static #TosRGBLimit = 285 / 93752;
+	static #Scalar = 12.92;
+	static #ToLinearLimit = 0.04045;
+	static #TosRGBLimit = 0.0031308;
 
 	static sRGBtoOKLab(srgb) {
 		// to reduce floating point error
@@ -246,7 +253,7 @@ class OkLab {
 
 			// to LMS
 			let l2 = 0.412221470800 * l1 + 0.536332536300 * a1 + 0.051445992900 * b1;
-			let a2 = 0.211903498234 * l1 + 0.680699545133 * a1 + 0.107396956633 * b1;
+			let a2 = 0.211903498200 * l1 + 0.680699545100 * a1 + 0.107396956600 * b1;
 			let b2 = 0.088302461900 * l1 + 0.281718837600 * a1 + 0.629978700500 * b1;
 
 			// to Linear LMS
@@ -255,9 +262,9 @@ class OkLab {
 			b1 = Math.cbrt(b2);
 
 			// to OkLab
-			l2 = 0.210454257467 * l1 + 0.793617787167 * a1 - 0.004072044634 * b1;
+			l2 = 0.210454255300 * l1 + 0.793617785000 * a1 - 0.004072046800 * b1;
 			a2 = 1.977998495100 * l1 - 2.428592205000 * a1 + 0.450593709900 * b1;
-			b2 = 0.025904024666 * l1 + 0.782771753767 * a1 - 0.808675778433 * b1;
+			b2 = 0.025904037100 * l1 + 0.782771766200 * a1 - 0.808675766000 * b1;
 
 			return new OkLab(l2, a2, b2);
 		}
@@ -284,9 +291,9 @@ class OkLab {
 			let b1 = lab.b
 
 			// to Linear LMS
-			let r2 = r1 + 0.396337792278 * g1 + 0.215803757471 * b1;
-			let g2 = r1 - 0.105561342920 * g1 - 0.063854171399 * b1;
-			let b2 = r1 - 0.089484185764 * g1 - 1.291485517099 * b1;
+			let r2 = r1 + 0.396337777400 * g1 + 0.215803757300 * b1;
+			let g2 = r1 - 0.105561345800 * g1 - 0.063854172800 * b1;
+			let b2 = r1 - 0.089484177500 * g1 - 1.291485548000 * b1;
 
 			// to LMS
 			r1 = r2 * r2 * r2;
@@ -294,9 +301,9 @@ class OkLab {
 			b1 = b2 * b2 * b2;
 
 			// to Linear RGB
-			r2 =  4.076741661667 * r1 - 3.307711590572 * g1 + 0.230969928905 * b1;
-			g2 = -1.268438004344 * r1 + 2.609757400792 * g1 - 0.341319396448 * b1;
-			b2 = -0.004196086474 * r1 - 0.703418614494 * g1 + 1.707614700968 * b1;
+			r2 =  4.076741662100 * r1 - 3.307711591300 * g1 + 0.230969929200 * b1;
+			g2 = -1.268438004600 * r1 + 2.609757401100 * g1 - 0.341319396500 * b1;
+			b2 = -0.004196086300 * r1 - 0.703418614700 * g1 + 1.707614701000 * b1;
 
 			// to sRGB
 			r1 = r2 <= this.#TosRGBLimit ? this.#Scalar * r2 : (MathCustom.NRoot(r2, 2.4) * 1.055) - 0.055;
