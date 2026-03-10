@@ -44,9 +44,15 @@ class sRGB {
 	}
 
 	get CSSColor() {
-		let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
-		let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
-		let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
+		function clamp(v, min, max) {
+			return Math.min(Math.max(v, min), max);
+		}
+		//let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
+		//let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
+		//let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
+		let rVal = clamp(Math.floor(this.r * 256), 0, 255);
+		let gVal = clamp(Math.floor(this.g * 256), 0, 255);
+		let bVal = clamp(Math.floor(this.b * 256), 0, 255);
 		return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
 	}
 
@@ -74,8 +80,7 @@ class LinearRGB {
 	}
 
 	clamp() {
-		this.r = Math.max(Math.min(this.r, 1), 0);
-		this.g = Math.max(Math.min(this.g, 1), 0);
+		this.r = Math.max(Math.min(this.r, 1), 0)		this.g = Math.max(Math.min(this.g, 1), 0);
 		this.b = Math.max(Math.min(this.b, 1), 0);
 	}
 
