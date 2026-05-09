@@ -1,5 +1,4 @@
 let ditherThreshold = new Bayer(16);
-const dithering_R = 1. / 255;
 
 function setup() {
 	const cnvWidth = document.documentElement.clientWidth - 20;
@@ -20,13 +19,15 @@ function GetIndex(x, y, w) {
 	return 4 * (x + y * w);
 }
 
+const ditherFactor = 255.
+const dithering_R = 1. / ditherFactor;
 function DitherValue(val, x, y) {
 	const M = ditherThreshold.GetThreshold(x, y) * -1.;
 	let newVal = val;
 
 	newVal += M * dithering_R;
 	newVal = newVal < 0. ? 0. : newVal > 1. ? 1. : newVal;
-	return Math.floor((256 * newVal)) / 255;
+	return Math.floor((ditherFactor + 1) * newVal) / ditherFactor;
 }
 
 function ColDToUint(v) {
@@ -45,11 +46,13 @@ function generate() {
 	// console.log('Generate Button Pressed');
 	console.clear();
 
+	console.log('Bayer Threshold', ditherThreshold.values);
+
 	const count = $('#countInput').val() * 1;
 	console.log('Count', count);
 
 	const pixD = pixelDensity();
-	const maxCount = width - 20;
+	const maxCount = Math.min((width - 20) / 2, 256);
 	console.log('Max Count', maxCount);
 
 	if (count >= 2 && count < maxCount) {
@@ -168,7 +171,7 @@ function generate() {
 		}
 		updatePixels();
 	} else if (count >= maxCount || count <= 0) {
-		// Do gradient
+		// Get colours
 		const col1sRGB = sRGB.HexTosRGB($('#colorA').val());
 		console.log('Colour 1 sRGB', col1sRGB);
 		const col1Lab = OkLab.sRGBtoOKLab(col1sRGB);
@@ -191,7 +194,7 @@ function generate() {
 		textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
 		textArea += '>';
 
-		textArea += count <= 0 ? 'Count set to zero or negative' : 'Count Exceeds Width!';
+		textArea += count <= 0 ? 'Count set to zero or negative' : 'Count Exceeds Max!';
 		textArea += '\nShowing dithered gradient instead\n\n';
 
 		textArea += col1sRGB.CSSColor + '\n' + col2sRGB.CSSColor + '\n\n';
@@ -207,18 +210,18 @@ function generate() {
 
 		// Resize canvas in case window size gets changed
 		let cnvWidth = document.documentElement.clientWidth - 20;
-		// if (count * 50 < cnvWidth) cnvWidth = count * 50;
 
 		// ----- DRAW AS A DITHERED GRADIENT -----
 
 		const cnvHeight = 50;
 		resizeCanvas(cnvWidth, cnvHeight, true);
-		background(255);
+		background(28);
 
 		loadPixels();
 		for (let x = 0; x < width * pixD; ++x) {
 			const t = x / (width * pixD);
 
+			if (x === 10) console.log('Debug t', t);
 			let col;
 
 			switch (mixType) {
@@ -248,23 +251,26 @@ function generate() {
 			for (let y = 0; y < height * pixD; ++y) {
 				const index = GetIndex(x, y, width * pixD);
 
-				// let rVal = DitherValue(col.r, x, y);
-				// let gVal = DitherValue(col.g, x, y);
-				// let bVal = DitherValue(col.b, x, y);
+				const r = col.r;
+				const g = col.g;
+				const b = col.b;
 
-				pixels[index + 0] = ColDToUint(DitherValue(col.r, x, y));
-				pixels[index + 1] = ColDToUint(DitherValue(col.g, x, y));
-				pixels[index + 2] = ColDToUint(DitherValue(col.b, x, y));
-
-				// pixels[index + 0] = output.r * 255;
-				// pixels[index + 1] = output.g * 255;
-				// pixels[index + 2] = output.b * 255;
+				pixels[index + 0] = ColDToUint(DitherValue(r, x, y));
+				pixels[index + 1] = ColDToUint(DitherValue(g, x, y));
+				pixels[index + 2] = ColDToUint(DitherValue(b, x, y));
 			}
 		}
 		updatePixels();
-
 	} else {
 		// Just show first colour
+
+		// Resize canvas in case window size gets changed
+		let cnvWidth = document.documentElement.clientWidth - 20;
+		if (cnvWidth > 50) cnvWidth = 50;
+
+		const cnvHeight = 50;
+		resizeCanvas(cnvWidth, cnvHeight, true);
+
 		const col1sRGB = sRGB.HexTosRGB($('#colorA').val());
 		console.log('Colour 1 sRGB', col1sRGB);
 
