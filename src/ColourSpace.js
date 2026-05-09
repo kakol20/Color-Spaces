@@ -43,16 +43,21 @@ class sRGB {
 		return out.copy();
 	}
 
+	#FloatToUint(v) {
+		let out = Math.floor(v * 256);
+		return out > 255 ? 255 : out < 0 ? 0 : out;
+	}
+
 	get CSSColor() {
 		function clamp255(v) {
 			return Math.min(Math.max(v, 0), 255);
 		}
-		//let rVal = Math.round(Math.max(Math.min(this.r, 1), 0) * 255);
-		//let gVal = Math.round(Math.max(Math.min(this.g, 1), 0) * 255);
-		//let bVal = Math.round(Math.max(Math.min(this.b, 1), 0) * 255);
-		let rVal = clamp255(Math.floor(this.r * 256));
-		let gVal = clamp255(Math.floor(this.g * 256));
-		let bVal = clamp255(Math.floor(this.b * 256));
+		// let rVal = clamp255(Math.floor(this.r * 256));
+		// let gVal = clamp255(Math.floor(this.g * 256));
+		// let bVal = clamp255(Math.floor(this.b * 256));
+		let rVal = this.#FloatToUint(this.r);
+		let gVal = this.#FloatToUint(this.g);
+		let bVal = this.#FloatToUint(this.b);
 		return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
 	}
 
