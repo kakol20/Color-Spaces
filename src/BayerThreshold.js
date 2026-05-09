@@ -2,13 +2,15 @@ class Bayer {
 	constructor(size) {
 		this.size = size;
 		this.values = this.#GenerateBayerHalf(this.size);
+
+		console.log('Bayer Threshold', this.values);
 	}
 
 	GetThreshold(x, y) {
 		let out = this.values[this.#MatrixIndex(x % this.size, y % this.size)] + 1;
 		out /= (this.size * this.size) + 1;
 
-		return out = 0.5;
+		return out - 0.5;
 	}
 
 	#GenerateBayerHalf(n) {
