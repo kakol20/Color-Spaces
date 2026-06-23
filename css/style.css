@@ -1,16 +1,19 @@
-@font-face {
-	font-family: 'Open Sans';
-	src: url('opensans-regular-webfont.woff2') format('woff2'), url('opensans-regular-webfont.woff') format('woff');
-	font-weight: normal;
-	font-style: normal;
+/* https://fonts.google.com/selection/embed */
+
+.dm-mono-regular {
+  font-family: "DM Mono", monospace;
+  font-weight: 400;
+  font-style: normal;
 }
 
 body {
-	font-family: 'Open Sans';
+	font-family: 'DM Mono';
 
 	padding: 0;
 	margin: 0;
 	/* line-height: 1.75; */
+
+	font-size: 14px;
 
 	background-color: color-mix(in oklab, Canvas, CanvasText 2.5%);
 	color: color-mix(in oklab, CanvasText, Canvas 15%);
