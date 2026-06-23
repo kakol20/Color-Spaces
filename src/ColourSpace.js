@@ -306,7 +306,7 @@ class OkLab {
 			b1 = b2 * b2 * b2;
 
 			// to Linear RGB
-			r2 =  4.076741662100 * r1 - 3.307711591300 * g1 + 0.230969929200 * b1;
+			r2 = 4.076741662100 * r1 - 3.307711591300 * g1 + 0.230969929200 * b1;
 			g2 = -1.268438004600 * r1 + 2.609757401100 * g1 - 0.341319396500 * b1;
 			b2 = -0.004196086300 * r1 - 0.703418614700 * g1 + 1.707614701000 * b1;
 
@@ -382,17 +382,81 @@ class OkLCh {
 		this.h = newLCh.h;
 	}
 
-	fallback(maxIterations = 5) {
-		let iter = 0;
-		let ogL = this.l;
-		while (iter < maxIterations) {
-			this.rgbClamp();
-
-			this.l = ogL;
-
-			iter++;
-
-			if (this.isInside) break;
+	fallback(maxIterations = 20) {
+		if (this.l >= 1. || this.l <= 0) {
+			this.l = this.l >= 1. ? 1. : this.l <= 0. ? 0. : this.l;
+			this.c = 0.;
+			this.h = 0.;
+			return;
 		}
+
+		if (this.isInside) return;
+
+		let lo = 0., hi = this.c;
+		let iter = 0.;
+
+		while (iter < maxIterations) {
+			const oldRGB = OkLCh.OkLChTosRGB(new OkLCh(this.l, lo, this.h));
+			let mid = 0.5 * (lo + hi);
+
+			// this.c = this.mid;
+			const testLCh = new OkLCh(this.l, mid, this.h);
+			if (testLCh.isInside) {
+				lo = mid;
+
+				const newRGB = OkLCh.OkLChTosRGB(testLCh);
+				if (oldRGB.CSSColor === newRGB.CSSColor) break;
+			} else {
+				hi = mid;
+			}
+			++iter;
+		}
+		// console.log(`OkLCh took ${iter} iterations`);
+
+		this.c = lo;
+	}
+
+	static HueMethod = {
+		Shorter: 'OkLCh Shorter',
+		Longer: 'OkLCh Longer',
+		Increasing: 'OkLCh Increasing',
+		Decreasing: 'OkLCh Decreasing'
+	}
+
+	static HueInterpolate(oklch1, oklch2, t, hueMethod = OkLCh.HueMethod.Shorter) {
+		// a, b and return value are in radians [0, TAU)
+		const h1 = ((oklch1.h % MathCustom.TAU) + MathCustom.TAU) % MathCustom.TAU;
+		const h2 = ((oklch2.h % MathCustom.TAU) + MathCustom.TAU) % MathCustom.TAU;
+
+		let delta = h2 - h1;
+
+		switch (hueMethod) {
+			case OkLCh.HueMethod.Longer:
+				if (delta > 0 && delta <= Math.PI) delta -= MathCustom.TAU;
+				if (delta <= 0 && delta >= -Math.PI) delta += MathCustom.TAU;
+				break;
+			case OkLCh.HueMethod.Increasing:
+				if (delta < 0) delta += MathCustom.TAU;
+				break;
+
+			case OkLCh.HueMethod.Decreasing:
+				if (delta > 0) delta -= MathCustom.TAU;
+				break;
+			default:
+				if (delta > Math.PI) delta -= MathCustom.TAU;
+				if (delta < -Math.PI) delta += MathCustom.TAU;
+				break;
+		}
+
+		let finalHue = h1 + delta * t;
+		finalHue = ((finalHue % MathCustom.TAU) + MathCustom.TAU) % MathCustom.TAU;
+
+		const finalC = (oklch2.c - oklch1.c) * t + oklch1.c;
+		const finalL = (oklch2.l - oklch1.l) * t + oklch1.l;
+
+		let newLCh = new OkLCh(finalL, finalC, finalHue);
+		newLCh.fallback();
+
+		return newLCh.copy();
 	}
 }

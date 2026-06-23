@@ -73,7 +73,7 @@ function generate() {
 		let palette = [];
 
 		// ----- GENERATE PALETTE -----
-		for (let i = 0; i < count; i++) {
+		for (let i = 0; i < count; ++i) {
 			const t = i / (count - 1);
 
 			if (i === 0) {
@@ -81,6 +81,8 @@ function generate() {
 			} else if (i === count - 1) {
 				palette.push(col2sRGB);
 			} else {
+				let col1, col2, newCol;
+
 				switch (mixType) {
 					case 'sRGB':
 						const sr = col1sRGB.r * (1 - t) + col2sRGB.r * t;
@@ -100,6 +102,34 @@ function generate() {
 						const lg = col1Lin.g * (1 - t) + col2Lin.g * t;
 						const lb = col1Lin.b * (1 - t) + col2Lin.b * t;
 						palette.push(LinearRGB.LinearTosRGB(new LinearRGB(lr, lg, lb)));
+						break;
+					case 'OkLCh Shorter':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						palette.push(OkLCh.OkLChTosRGB(newCol));
+						break;
+					case 'OkLCh Longer':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						palette.push(OkLCh.OkLChTosRGB(newCol));
+						break;
+					case 'OkLCh Increasing':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						palette.push(OkLCh.OkLChTosRGB(newCol));
+						break;
+					case 'OkLCh Decreasing':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						palette.push(OkLCh.OkLChTosRGB(newCol));
 						break;
 					default:
 						console.error('Unknown mix type: ' + mixType);
@@ -222,7 +252,7 @@ function generate() {
 			const t = x / (width * pixD);
 
 			if (x === 10) console.log('Debug t', t);
-			let col;
+			let col, col1, col2, newCol;
 
 			switch (mixType) {
 				case 'sRGB':
@@ -243,6 +273,34 @@ function generate() {
 					const lb = col1Lin.b * (1 - t) + col2Lin.b * t;
 					col = LinearRGB.LinearTosRGB(new LinearRGB(lr, lg, lb));
 					break;
+					case 'OkLCh Shorter':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						col = OkLCh.OkLChTosRGB(newCol);
+						break;
+					case 'OkLCh Longer':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						col = OkLCh.OkLChTosRGB(newCol);
+						break;
+					case 'OkLCh Increasing':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						col = OkLCh.OkLChTosRGB(newCol);
+						break;
+					case 'OkLCh Decreasing':
+						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
+						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
+
+						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						col = OkLCh.OkLChTosRGB(newCol);
+						break;
 				default:
 					col = col1sRGB.copy();
 					console.error('Unknown mix type: ' + mixType);
