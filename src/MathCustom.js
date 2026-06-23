@@ -22,6 +22,12 @@ class MathCustom {
 		return Math.round((numer + Number.EPSILON) * mult) / mult;
 	}
 
+	static FloatCharLead(n, places, count = 0, lead = ' ',) {
+		let out = n.toFixed(places);
+		while (out.length < count) out = lead + out;
+		return out;
+	}
+
 	static TAU = Math.PI * 2;
 	static DegToRad = Math.PI / 180;
 	static RadToDeg = 180 / Math.PI;

@@ -1,3 +1,10 @@
+function CharLead(str, count, lead = ' ') {
+	let out = str;
+
+	while (out.length < count) out = lead + out;
+	return out;
+}
+
 class sRGB {
 	constructor(r = 0, g = 0, b = 0) {
 		this.r = r;
@@ -58,7 +65,10 @@ class sRGB {
 		let rVal = this.#FloatToUint(this.r);
 		let gVal = this.#FloatToUint(this.g);
 		let bVal = this.#FloatToUint(this.b);
-		return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
+		return 'rgb(' + 
+			CharLead(rVal.toString(), 3) + ', ' + 
+			CharLead(gVal.toString(), 3) + ', ' + 
+			CharLead(bVal.toString(), 3) + ')';
 	}
 
 	static HexTosRGB(hex) {
@@ -132,7 +142,10 @@ class LinearRGB {
 		let rVal = clamp255(Math.floor(this.r * 256));
 		let gVal = clamp255(Math.floor(this.g * 256));
 		let bVal = clamp255(Math.floor(this.b * 256));
-		return 'rgb(' + rVal + ',' + gVal + ',' + bVal + ')';
+		return 'rgb(' + 
+			CharLead(rVal.toString(), 3) + ', ' + 
+			CharLead(gVal.toString(), 3) + ', ' + 
+			CharLead(bVal.toString(), 3) + ')';
 	}
 
 	static HexTosRGB(hex) {
@@ -214,7 +227,10 @@ class OkLab {
 
 	get CSSColor() {
 		const l = Math.max(Math.min(this.l, 1), 0);
-		return 'oklab(' + MathCustom.Round(l, 4) + ', ' + MathCustom.Round(this.a, 4) + ', ' + MathCustom.Round(this.b, 4) + ')';
+		return 'oklab(' + 
+			MathCustom.FloatCharLead(l, 4, 6) + ', ' + 
+			MathCustom.FloatCharLead(this.a, 4, 7) + ', ' + 
+			MathCustom.FloatCharLead(this.b, 4, 7) + ')';
 	}
 
 	static mix(lab1, lab2, t) {
@@ -370,7 +386,10 @@ class OkLCh {
 	get CSSColor() {
 		const l = Math.max(Math.min(this.l, 1), 0);
 		const h = this.h * MathCustom.RadToDeg;
-		return 'oklch(' + MathCustom.Round(l, 4) + ', ' + MathCustom.Round(this.c, 4) + ', ' + MathCustom.Round(h, 4) + ')';
+		return 'oklch(' + 
+			MathCustom.FloatCharLead(l, 4, 6) + ', ' + 
+			MathCustom.FloatCharLead(this.c, 4, 6) + ', ' + 
+			MathCustom.FloatCharLead(h, 4, 8) + ')';
 	}
 
 	rgbClamp() {
