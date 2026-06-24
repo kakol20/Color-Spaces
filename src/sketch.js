@@ -351,12 +351,12 @@ function generate() {
 
 // For creating a full circle that fits inside gamut without using fallback
 /*
-const c = 0.1134350109482354;
-let col1 = OkLCh.sRGBToOkLCh(sRGB.HexTosRGB('#ff0000'));
-let col2 = OkLCh.sRGBToOkLCh(sRGB.HexTosRGB('#ff0000'));
+const c = 0.09814458811923257;
+let col1 = OkLCh.sRGBToOkLCh(sRGB.HexTosRGB('#0000ff'));
+let col2 = OkLCh.sRGBToOkLCh(sRGB.HexTosRGB('#ffff00'));
 
-col1.l = 2 / 3;
-col2.l = 2 / 3;
+// col1.l = 2 / 3;
+// col2.l = 2 / 3;
 
 col1.c = c;
 col2.c = c;
@@ -370,5 +370,5 @@ col2.fallback();
 console.log(OkLCh.OkLChTosRGB(col1).CSSColor, OkLCh.OkLChTosRGB(col2).CSSColor);
 */
 /*
-rgb(209, 120, 107) rgb(209, 120, 107)
+rgb( 57,  83, 141) rgb(249, 251, 173)
 */
