@@ -242,7 +242,7 @@ function generate() {
 		textArea += col1sRGB.CSSColor + '\n' + col2sRGB.CSSColor + '\n\n';
 		textArea += col1Lab.CSSColor + '\n' + col2Lab.CSSColor + '\n\n';
 		textArea += OkLCh.LabToLCh(col1Lab).CSSColor + '\n' + OkLCh.LabToLCh(col2Lab).CSSColor + '\n\n';
-		textArea += sRGB.sRGBToHex(col1sRGB) + '\n' + sRGB.sRGBToHex(col1sRGB);
+		textArea += sRGB.sRGBToHex(col1sRGB) + '\n' + sRGB.sRGBToHex(col2sRGB);
 
 		textArea += '</textarea>';
 
