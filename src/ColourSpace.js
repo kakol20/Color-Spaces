@@ -85,6 +85,14 @@ class sRGB {
 
 		return new sRGB(rVal, gVal, bVal);
 	}
+
+	static sRGBToHex(rgb) {
+		const hex = "#" + (1 << 24 | 
+			rgb.#FloatToUint(rgb.r) << 16 | 
+			rgb.#FloatToUint(rgb.g) << 8 | 
+			rgb.#FloatToUint(rgb.b)).toString(16).slice(1);
+		return hex.toUpperCase();
+	}
 }
 
 class LinearRGB {

@@ -137,6 +137,13 @@ function generate() {
 			}
 		}
 
+		let maxC = 1;
+		for (let i = 0; i < palette.length; ++i) {
+			const col = OkLCh.sRGBToOkLCh(palette[i]);
+			maxC = col.c < maxC ? col.c : maxC;
+		}
+		console.log('OkLCh Max', maxC);
+ 
 		// ----- TEXT OUTPUT -----
 
 		let out = '';
@@ -145,7 +152,7 @@ function generate() {
 		textArea += ' height: auto; width: auto;';
 		textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
 		textArea += '>';
-		let textAreaText = ['', '', ''];
+		let textAreaText = ['', '', '', ''];
 
 		for (let i = 0; i < palette.length; ++i) {
 			const valRGB = palette[i];
@@ -154,15 +161,20 @@ function generate() {
 			textAreaText[0] += valRGB.CSSColor;
 			textAreaText[1] += valLab.CSSColor;
 			textAreaText[2] += valLCh.CSSColor;
+			textAreaText[3] += sRGB.sRGBToHex(valRGB);
 
 			if (i < palette.length - 1) {
 				textAreaText[0] += "\n";
 				textAreaText[1] += "\n";
 				textAreaText[2] += "\n";
+				textAreaText[3] += "\n";
 			}
 		}
 
-		textArea += textAreaText[0] + '\n\n' + textAreaText[1] + '\n\n' + textAreaText[2];
+		textArea += textAreaText[0] + '\n\n' + 
+		textAreaText[1] + '\n\n' + 
+		textAreaText[2] + '\n\n' +
+		textAreaText[3];
 		textArea += '</textarea>';
 
 		$('#output').html(out + textArea);
@@ -229,7 +241,8 @@ function generate() {
 
 		textArea += col1sRGB.CSSColor + '\n' + col2sRGB.CSSColor + '\n\n';
 		textArea += col1Lab.CSSColor + '\n' + col2Lab.CSSColor + '\n\n';
-		textArea += OkLCh.LabToLCh(col1Lab).CSSColor + '\n' + OkLCh.LabToLCh(col2Lab).CSSColor;
+		textArea += OkLCh.LabToLCh(col1Lab).CSSColor + '\n' + OkLCh.LabToLCh(col2Lab).CSSColor + '\n\n';
+		textArea += sRGB.sRGBToHex(col1sRGB) + '\n' + sRGB.sRGBToHex(col1sRGB);
 
 		textArea += '</textarea>';
 
@@ -251,7 +264,7 @@ function generate() {
 		for (let x = 0; x < width * pixD; ++x) {
 			const t = x / (width * pixD);
 
-			if (x === 10) console.log('Debug t', t);
+			// if (x === 10) console.log('Debug t', t);
 			let col, col1, col2, newCol;
 
 			switch (mixType) {
@@ -335,3 +348,27 @@ function generate() {
 		background($('#colorA').val());
 	}
 }
+
+// For creating a full circle that fits inside gamut without using fallback
+/*
+const c = 0.1134350109482354;
+let col1 = OkLCh.sRGBToOkLCh(sRGB.HexTosRGB('#ff0000'));
+let col2 = OkLCh.sRGBToOkLCh(sRGB.HexTosRGB('#ff0000'));
+
+col1.l = 2 / 3;
+col2.l = 2 / 3;
+
+col1.c = c;
+col2.c = c;
+
+// col1.h = 0;
+// col2.h = 0;
+
+col1.fallback();
+col2.fallback();
+
+console.log(OkLCh.OkLChTosRGB(col1).CSSColor, OkLCh.OkLChTosRGB(col2).CSSColor);
+*/
+/*
+rgb(209, 120, 107) rgb(209, 120, 107)
+*/
