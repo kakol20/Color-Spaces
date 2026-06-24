@@ -48,14 +48,14 @@ function generate() {
 
 	console.log('Bayer Threshold', ditherThreshold.values);
 
-	const count = $('#countInput').val() * 1;
+	const count = Math.floor($('#countInput').val() * 1);
 	console.log('Count', count);
 
 	const pixD = pixelDensity();
 	const maxCount = Math.floor(Math.min((window.innerWidth - 20) / 2, 256));
 	console.log('Max Count', maxCount);
 
-	if (count >= 2 && count < maxCount) {
+	if (count >= 1 && count < maxCount) {
 		// Do gradient
 		const col1sRGB = sRGB.HexTosRGB($('#colorA').val());
 		console.log('Colour 1 sRGB', col1sRGB);
