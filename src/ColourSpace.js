@@ -451,7 +451,7 @@ class OkLCh {
 	}
 
 	static HueInterpolate(oklch1, oklch2, t, hueMethod = OkLCh.HueMethod.Shorter) {
-		// a, b and return value are in radians [0, TAU)
+		// a, b and return value are in radians [0, TAU]
 		const h1 = ((oklch1.h % MathCustom.TAU) + MathCustom.TAU) % MathCustom.TAU;
 		const h2 = ((oklch2.h % MathCustom.TAU) + MathCustom.TAU) % MathCustom.TAU;
 
