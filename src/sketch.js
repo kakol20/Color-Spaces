@@ -52,7 +52,7 @@ function generate() {
 	console.log('Count', count);
 
 	const pixD = pixelDensity();
-	const maxCount = Math.min((width - 20) / 2, 256);
+	const maxCount = Math.floor(Math.min((window.innerWidth - 20) / 2, 256));
 	console.log('Max Count', maxCount);
 
 	if (count >= 2 && count < maxCount) {
