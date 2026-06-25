@@ -38,17 +38,6 @@ const devTools = {
 		console.log('New', newCol1_OkLCh.CSSColor, newCol2_OkLCh.CSSColor);
 		console.log(newCol1_sRGB.CSSColor, newCol2_sRGB.CSSColor);
 		console.log(sRGB.sRGBToHex(newCol1_sRGB), sRGB.sRGBToHex(newCol2_sRGB));
-
-		/*
-		OkLCh Shorter
-		OkLCh Longer
-		OkLCh Increasing
-		OkLCh Decreasing
-
-devTools.scalingMethod('#2D50A1', '#F8FBB2', 256, OkLCh.HueMethod.Shorter);
-rgb( 50,  82, 152) rgb(248, 251, 187)
-#325298 #F8FBBB
-		*/
 	},
 
 	manual: function (hex1 = '#0000ff', hex2 = '#ffff00', startC = 1) {

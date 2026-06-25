@@ -1,0 +1,12 @@
+OkLCh Shorter
+OkLCh Longer
+OkLCh Increasing
+OkLCh Decreasing
+
+devTools.scalingMethod('#1C1C1C', '#ffff00', 256, OkLCh.HueMethod.Shorter);
+
+rgb( 50,  82, 152) rgb(248, 251, 187)
+#325298 #F8FBBB
+
+rgb( 61,  84, 135) rgb( 28,  28,  28)
+#3D5487 #1C1C1C
