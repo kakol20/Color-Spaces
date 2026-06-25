@@ -1,5 +1,5 @@
 const devTools = {
-	decreaseCValues: function (hex1 = '#0000ff', hex2 = '#ffff00', count = 256, method = OkLCh.HueMethod.Longer) {
+	scalingMethod: function (hex1 = '#0000ff', hex2 = '#ffff00', count = 256, method = OkLCh.HueMethod.Longer) {
 		// const expectedC = (col2.c - col1.c) * t + col1.c;
 		// let newC = (offset.actualC - col2.c * offset.t) / (1 - offset.t);
 		// let newC = (offset.actualC - col1.c) / offset.t + col1.c;
@@ -15,7 +15,7 @@ const devTools = {
 		for (let i = 0; i < count; ++i) {
 			const t = i / (count - 1);
 			const expectedC = (col2_OkLCh.c - col1_OkLCh.c) * t + col1_OkLCh.c;
-			if (expectedC === 0) continue;
+			if (expectedC <= 0) continue;
 
 			const col_OkLCh = OkLCh.HueInterpolate(col1_OkLCh, col2_OkLCh, t, method);
 			const actualC = col_OkLCh.c;
@@ -44,16 +44,11 @@ const devTools = {
 		OkLCh Longer
 		OkLCh Increasing
 		OkLCh Decreasing
-		rgb(193, 110,  98) #c16e62
-		rgb(245, 246, 235) #f5f6eb
-		rgb(187, 223, 184) #bbdfb8
-		rgb(190, 234, 233) #beeae9
-		rgb( 64,  85, 129) #405581
-		rgb(199, 131, 196) #c783c4
+
+devTools.scalingMethod('#2D50A1', '#F8FBB2', 256, OkLCh.HueMethod.Shorter);
+rgb( 50,  82, 152) rgb(248, 251, 187)
+#325298 #F8FBBB
 		*/
-
-// devTools.decreaseCValues('#ff', '#ff00ff', 256, OkLCh.HueMethod.Shorter);
-
 	},
 
 	manual: function (hex1 = '#0000ff', hex2 = '#ffff00', startC = 1) {
