@@ -137,12 +137,12 @@ function generate() {
 			}
 		}
 
-		let maxC = 1;
+		let minC = 1;
 		for (let i = 0; i < palette.length; ++i) {
 			const col = OkLCh.sRGBToOkLCh(palette[i]);
-			maxC = col.c < maxC ? col.c : maxC;
+			minC = col.c < minC ? col.c : minC;
 		}
-		console.log('OkLCh Max', maxC);
+		console.log('OkLCh Min', minC);
  
 		// ----- TEXT OUTPUT -----
 
