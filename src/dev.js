@@ -12,8 +12,8 @@ const devTools = {
 
 		let minScale = 1;
 
-		for (let i = 0; i < count; ++i) {
-			const t = i / (count - 1);
+		for (let i = 0; i < Math.floor(count); ++i) {
+			const t = i / (Math.floor(count) - 1);
 			const expectedC = (col2_OkLCh.c - col1_OkLCh.c) * t + col1_OkLCh.c;
 			if (expectedC <= 0) continue;
 
@@ -59,8 +59,8 @@ const devTools = {
 
 		let minScale = 1;
 
-		for (let i = 0; i < count; ++i) {
-			const t = i / (count - 1);
+		for (let i = 0; i < Math.floor(count); ++i) {
+			const t = i / (Math.floor(count) - 1);
 			const expectedC = (col2_OkLCh.c - col1_OkLCh.c) * t + col1_OkLCh.c;
 			if (expectedC <= 0) continue;
 
@@ -72,8 +72,8 @@ const devTools = {
 			if (currentScale < minScale) minScale = currentScale;
 		}
 
-		for (let i = 0; i < count; ++i) {
-			const t = i / (count - 1);
+		for (let i = 0; i < Math.floor(count); ++i) {
+			const t = i / (Math.floor(count) - 1);
 			const expectedC = (col2_OkLCh.c - col1_OkLCh.c) * t + col1_OkLCh.c;
 			if (expectedC <= 0) continue;
 
@@ -131,8 +131,8 @@ const devTools = {
 		let chroma = 0;
 		let lightness = 0;
 
-		for (let i = 0; i < iterations; ++i) {
-			const l = i / (iterations - 1.);
+		for (let i = 0; i < Math.floor(iterations); ++i) {
+			const l = i / (Math.floor(iterations) - 1.);
 
 			let lch = new OkLCh(l, 1, hue);
 			lch.fallback();
