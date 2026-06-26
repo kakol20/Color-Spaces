@@ -61,11 +61,15 @@ function generate() {
 		console.log('Colour 1 sRGB', col1sRGB);
 		const col1Lab = OkLab.sRGBtoOKLab(col1sRGB);
 		console.log('Colour 1 OkLab', col1Lab);
+		const col1LCh = OkLCh.sRGBToOkLCh(col1sRGB);
+		console.log('Color 1 OkLCh', col1LCh);
 
 		const col2sRGB = sRGB.HexTosRGB($('#colorB').val());
 		console.log('Colour 2', col2sRGB);
 		const col2Lab = OkLab.sRGBtoOKLab(col2sRGB);
 		console.log('Colour 2 OkLab', col2Lab);
+		const col2LCh = OkLCh.sRGBToOkLCh(col2sRGB);
+		console.log('Color 2 OkLCh', col2LCh);
 
 		const mixType = $('#select').val();
 		console.log('Mix Type', mixType);
@@ -81,7 +85,7 @@ function generate() {
 			} else if (i === count - 1) {
 				palette.push(col2sRGB);
 			} else {
-				let col1, col2, newCol;
+				let newCol;
 
 				switch (mixType) {
 					case 'sRGB':
@@ -104,31 +108,19 @@ function generate() {
 						palette.push(LinearRGB.LinearTosRGB(new LinearRGB(lr, lg, lb)));
 						break;
 					case 'OkLCh Shorter':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						palette.push(OkLCh.OkLChTosRGB(newCol));
 						break;
 					case 'OkLCh Longer':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						palette.push(OkLCh.OkLChTosRGB(newCol));
 						break;
 					case 'OkLCh Increasing':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						palette.push(OkLCh.OkLChTosRGB(newCol));
 						break;
 					case 'OkLCh Decreasing':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						palette.push(OkLCh.OkLChTosRGB(newCol));
 						break;
 					default:
@@ -221,11 +213,15 @@ function generate() {
 		console.log('Colour 1 sRGB', col1sRGB);
 		const col1Lab = OkLab.sRGBtoOKLab(col1sRGB);
 		console.log('Colour 1 OkLab', col1Lab);
+		const col1LCh = OkLCh.sRGBToOkLCh(col1sRGB);
+		console.log('Color 1 OkLCh', col1LCh);
 
 		const col2sRGB = sRGB.HexTosRGB($('#colorB').val());
 		console.log('Colour 2', col2sRGB);
 		const col2Lab = OkLab.sRGBtoOKLab(col2sRGB);
 		console.log('Colour 2 OkLab', col2Lab);
+		const col2LCh = OkLCh.sRGBToOkLCh(col2sRGB);
+		console.log('Color 2 OkLCh', col2LCh);
 
 		const mixType = $('#select').val();
 		console.log('Mix Type', mixType);
@@ -268,7 +264,7 @@ function generate() {
 			const t = x / (width * pixD);
 
 			// if (x === 10) console.log('Debug t', t);
-			let col, col1, col2, newCol;
+			let col, newCol;
 
 			switch (mixType) {
 				case 'sRGB':
@@ -290,31 +286,20 @@ function generate() {
 					col = LinearRGB.LinearTosRGB(new LinearRGB(lr, lg, lb));
 					break;
 					case 'OkLCh Shorter':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
 
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						col = OkLCh.OkLChTosRGB(newCol);
 						break;
 					case 'OkLCh Longer':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						col = OkLCh.OkLChTosRGB(newCol);
 						break;
 					case 'OkLCh Increasing':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						col = OkLCh.OkLChTosRGB(newCol);
 						break;
 					case 'OkLCh Decreasing':
-						col1 = OkLCh.sRGBToOkLCh(col1sRGB);
-						col2 = OkLCh.sRGBToOkLCh(col2sRGB);
-
-						newCol = OkLCh.HueInterpolate(col1, col2, t, mixType);
+						newCol = OkLCh.HueInterpolate(col1LCh, col2LCh, t, mixType);
 						col = OkLCh.OkLChTosRGB(newCol);
 						break;
 				default:
@@ -347,6 +332,10 @@ function generate() {
 
 		const col1sRGB = sRGB.HexTosRGB($('#colorA').val());
 		console.log('Colour 1 sRGB', col1sRGB);
+		const col1Lab = OkLab.sRGBtoOKLab(col1sRGB);
+		console.log('Colour 1 OkLab', col1Lab);
+		const col1LCh = OkLCh.sRGBToOkLCh(col1sRGB);
+		console.log('Color 1 OkLCh', col1LCh);
 
 		background($('#colorA').val());
 	}
