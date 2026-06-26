@@ -138,17 +138,20 @@ function generate() {
 		}
 
 		let minC = 1;
+		let maxC = 0;
 		for (let i = 0; i < palette.length; ++i) {
 			const col = OkLCh.sRGBToOkLCh(palette[i]);
 			minC = col.c < minC ? col.c : minC;
+			maxC = col.c > maxC ? col.c : maxC;
 		}
 		console.log('OkLCh Min', minC);
+		console.log('OkLCh Max', maxC);
  
 		// ----- TEXT OUTPUT -----
 
 		let out = '';
 
-		let textArea = '<textarea wrap="off" id="textOut" style="position: absolute; left: 10px;';
+		let textArea = '<textarea spellcheck="false" wrap="off" id="textOut" style="position: absolute; left: 10px;';
 		textArea += ' height: auto; width: auto;';
 		textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
 		textArea += '>';
@@ -231,7 +234,7 @@ function generate() {
 
 		let out = '';
 
-		let textArea = '<textarea wrap="off" id="textOut" style="position: absolute; left: 10px;';
+		let textArea = '<textarea spellcheck="false" wrap="off" id="textOut" style="position: absolute; left: 10px;';
 		textArea += ' height: auto; width: auto;';
 		textArea += ' top: ' + (top + 10 + boxHeight) + 'px;"';
 		textArea += '>';
