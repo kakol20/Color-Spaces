@@ -43,7 +43,7 @@ const devTools = {
 	scalingMethodBothWays: function(hex1 = '#0000ff', hex2 = '#ffff00', count = 1609, method = OkLCh.HueMethod.Longer) {
 		let method1 = method;
 		let method2 = method;
-		if (method === OkLCh.HueMethod.Longer || method === OkLCh.HueMethod.Longer) {
+		if (method === OkLCh.HueMethod.Longer || method === OkLCh.HueMethod.Shorter) {
 			method1 = OkLCh.HueMethod.Longer;
 			method2 = OkLCh.HueMethod.Shorter;
 		} else {
