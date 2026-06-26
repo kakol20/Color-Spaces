@@ -1,5 +1,5 @@
 const devTools = {
-	scalingMethod: function (hex1 = '#0000ff', hex2 = '#ffff00', count = 512, method = OkLCh.HueMethod.Longer) {
+	scalingMethod: function (hex1 = '#0000ff', hex2 = '#ffff00', count = 1609, method = OkLCh.HueMethod.Longer) {
 		// const expectedC = (col2.c - col1.c) * t + col1.c;
 		// let newC = (offset.actualC - col2.c * offset.t) / (1 - offset.t);
 		// let newC = (offset.actualC - col1.c) / offset.t + col1.c;
@@ -40,7 +40,7 @@ const devTools = {
 		console.log(sRGB.sRGBToHex(newCol1_sRGB), sRGB.sRGBToHex(newCol2_sRGB));
 	},
 
-	scalingMethodBothWays: function(hex1 = '#0000ff', hex2 = '#ffff00', count = 512, method = OkLCh.HueMethod.Longer) {
+	scalingMethodBothWays: function(hex1 = '#0000ff', hex2 = '#ffff00', count = 1609, method = OkLCh.HueMethod.Longer) {
 		let method1 = method;
 		let method2 = method;
 		if (method === OkLCh.HueMethod.Longer || method === OkLCh.HueMethod.Longer) {

@@ -54,7 +54,7 @@ Highest Chroma rgb(255, 255,   0) #FFFF00 oklab(0.9667, -0.0713,  0.1983) oklch(
 
 ============================================================
 
-devTools.scalingMethodBothWays('#FF0088', '#00FFE1', 805, OkLCh.HueMethod.Decreasing);
+devTools.scalingMethodBothWays('#FF0088', '#00FFE1', 1609, OkLCh.HueMethod.Decreasing);
 
 rgb( 50,  82, 152) rgb(248, 250, 187)
 #325298 #F8FABB
