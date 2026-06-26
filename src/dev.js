@@ -67,7 +67,7 @@ const devTools = {
 		console.log(sRGB.sRGBToHex(col1RGB), sRGB.sRGBToHex(col2RGB));
 	},
 
-	highestChroma: function(hue = 0, iterations = 256) {
+	highestChroma: function(hue = 0, iterations = 512) {
 		let chroma = 0;
 		let lightness = 0;
 
@@ -77,15 +77,10 @@ const devTools = {
 			let lch = new OkLCh(l, 1, hue);
 			lch.fallback();
 
-			// console.log(l, lch, lch.c);
-
 			if (lch.c > chroma) {
 				chroma = lch.c;
 				lightness = l;
 			}
-
-			// chroma = lch.c > chroma ? lch.c : chroma;
-			// lightness = lch.c > chroma ? lch.l : lightness;
 		}
 
 		const lch = new OkLCh(lightness, chroma, hue);

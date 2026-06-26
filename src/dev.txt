@@ -3,7 +3,7 @@ OkLCh Longer
 OkLCh Increasing
 OkLCh Decreasing
 
-devTools.scalingMethod('#C9685B', '#A3F1EF', 256, OkLCh.HueMethod.Shorter);
+devTools.scalingMethod('#E4518A', '#7AF7E0', 256, OkLCh.HueMethod.Decreasing);
 
 rgb( 50,  82, 152) rgb(248, 251, 187)
 #325298 #F8FBBB
@@ -14,8 +14,8 @@ rgb(249, 252, 174) rgb( 57,  83, 140)
 rgb(167, 231, 161) rgb(201, 130, 198)
 #A7E7A1 #C982C6
 
-rgb(208, 103, 139) rgb(158, 240, 223)
-#D0678B #9EF0DF
+rgb(208, 104, 139) rgb(157, 241, 224)
+#D0688B #9DF1E0
 
 rgb(201, 104,  91) rgb(163, 241, 239)
 #C9685B #A3F1EF
@@ -41,5 +41,13 @@ rgb(255, 255,   0) rgb(  0,  49, 229)
 ============================================================
 devTools.highestChroma(0)
 
-Highest Chroma rgb(255,   0, 136) #FF0088 oklab(0.6471,  0.2623,  0.0000) oklch(0.6471, 0.2623,   0.0000)
-Highest Chroma rgb(  0, 255, 225) #00FFE1 oklab(0.8941, -0.1622,  0.0000) oklch(0.8941, 0.1622, 180.0000)
+Highest Chroma rgb(255,   0, 136) #FF0088 oklab(0.6477,  0.2625,  0.0000) oklch(0.6477, 0.2625,   0.0000)
+Highest Chroma rgb(  0, 255, 225) #00FFE1 oklab(0.8943, -0.1622,  0.0000) oklch(0.8943, 0.1622, 180.0000)
+
+============================================================
+
+devTools.highestChroma(OkLCh.sRGBToOkLCh(new sRGB(0, 0, 1)).h, 512);
+devTools.highestChroma(OkLCh.sRGBToOkLCh(new sRGB(1, 1, 0)).h, 512);
+
+Highest Chroma rgb(  0,  55, 255) #0037FF oklab(0.4892, -0.0298, -0.2858) oklch(0.4892, 0.2874, 264.0520)
+Highest Chroma rgb(255, 255,   0) #FFFF00 oklab(0.9667, -0.0713,  0.1983) oklch(0.9667, 0.2107, 109.7692)
