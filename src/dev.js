@@ -65,11 +65,32 @@ const devTools = {
 
 		console.log(col1RGB.CSSColor, col2RGB.CSSColor);
 		console.log(sRGB.sRGBToHex(col1RGB), sRGB.sRGBToHex(col2RGB));
+	},
 
-		/*
-		rgb(193, 110,  98) rgb(193, 110,  98)
+	highestChroma: function(hue = 0, iterations = 256) {
+		let chroma = 0;
+		let lightness = 0;
 
-devTools.manual('#ff0000', '#ff0000', 0.10675064085838756);
-		*/
+		for (let i = 0; i < iterations; ++i) {
+			const l = i / (iterations - 1.);
+
+			let lch = new OkLCh(l, 1, hue);
+			lch.fallback();
+
+			// console.log(l, lch, lch.c);
+
+			if (lch.c > chroma) {
+				chroma = lch.c;
+				lightness = l;
+			}
+
+			// chroma = lch.c > chroma ? lch.c : chroma;
+			// lightness = lch.c > chroma ? lch.l : lightness;
+		}
+
+		const lch = new OkLCh(lightness, chroma, hue);
+		const rgb = OkLCh.OkLChTosRGB(lch);
+		const lab = OkLab.sRGBtoOKLab(rgb);
+		console.log('Highest Chroma', rgb.CSSColor, sRGB.sRGBToHex(rgb), lab.CSSColor, lch.CSSColor);
 	}
 }
