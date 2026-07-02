@@ -214,5 +214,20 @@ const devTools = {
 		console.log(lch);
 
 		return lch.copy();
+	},
+
+	customHueMix: function(hex1, hex2, t, method = OkLCh.HueMethod.Longer) {
+		const col1_sRGB = sRGB.HexTosRGB(hex1);
+		const col2_sRGB = sRGB.HexTosRGB(hex2);
+
+		const col1_OkLCh = OkLCh.sRGBToOkLCh(col1_sRGB);
+		const col2_OkLCh = OkLCh.sRGBToOkLCh(col2_sRGB);
+
+		const out_OkLCh = OkLCh.HueInterpolate(col1_OkLCh, col2_OkLCh, t, method);
+		const out_sRGB = OkLCh.OkLChTosRGB(out_OkLCh);
+
+		console.log(out_sRGB, out_OkLCh);
+		console.log(out_sRGB.CSSColor);
+		console.log(sRGB.sRGBToHex(out_sRGB));
 	}
 }

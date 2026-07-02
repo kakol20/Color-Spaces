@@ -23,6 +23,9 @@ rgb(201, 104,  91) rgb(163, 241, 239)
 rgb(193, 110,  98) rgb(193, 110,  98)
 #C16E62 #C16E62
 
+rgb(  0,   0,   0) rgb(255, 255,  57)
+#000000 #FFFF39
+
 ============================================================
 
 devTools.manual('#ffff00', '#0000ff', 0.21100590772552355);
@@ -73,7 +76,17 @@ rgb(208, 103, 139) rgb(157, 240, 223)
 
 ============================================================
 
-devTools.scalingMethodHue(0, Math.PI, 1609, OkLCh.HueMethod.Decreasing);
+devTools.scalingMethodHue((2/3) * Math.PI, Math.PI + (2/3) * Math.PI, 1609, OkLCh.HueMethod.Decreasing);
 
 rgb(208, 103, 139) rgb(156, 240, 223)
 #D0678B #9CF0DF
+
+rgb(236, 154,  83) rgb( 83, 173, 232)
+#EC9A53 #53ADE8
+
+rgb(225, 247, 161) rgb(128,  90, 186)
+#E1F7A1 #805ABA
+
+============================================================
+
+devTools.customHueMix('#000000', '#F8FBBB', 18.22 / 100, OkLCh.HueMethod.Shorter);
