@@ -3,28 +3,13 @@ OkLCh Longer
 OkLCh Increasing
 OkLCh Decreasing
 
-devTools.scalingMethod('#ff0000', '#ff0000', 1609, OkLCh.HueMethod.Longer);
+devTools.scalingMethod('#ff0000', '#ffff00', 1609, OkLCh.HueMethod.Increasing);
 
-rgb( 50,  82, 152) rgb(248, 251, 187)
-#325298 #F8FBBB
+rgb(221,  86,  71) rgb(251, 253, 136)
+#DD5647 #FBFD88
 
-rgb(249, 252, 174) rgb( 57,  83, 140)
-#F9FCAE #39538C
-
-rgb(167, 231, 161) rgb(201, 130, 198)
-#A7E7A1 #C982C6
-
-rgb(208, 104, 139) rgb(157, 241, 224)
-#D0688B #9DF1E0
-
-rgb(201, 104,  91) rgb(163, 241, 239)
-#C9685B #A3F1EF
-
-rgb(193, 110,  98) rgb(193, 110,  98)
-#C16E62 #C16E62
-
-rgb(  0,   0,   0) rgb(255, 255,  57)
-#000000 #FFFF39
+rgb(100, 248,  92) rgb(107, 250, 249)
+#64F85C #6BFAF9
 
 ============================================================
 
@@ -62,17 +47,14 @@ Highest Chroma rgb(255, 255,   0) #FFFF00 oklab(0.9667, -0.0713,  0.1983) oklch(
 
 devTools.scalingMethodBothWays('#FF0088', '#00FFE1', 1609, OkLCh.HueMethod.Decreasing);
 
-rgb( 50,  82, 152) rgb(248, 250, 187)
-#325298 #F8FABB
-
 rgb(201, 104,  91) rgb(163, 241, 239)
 #C9685B #A3F1EF
 
 rgb(167, 231, 161) rgb(201, 130, 198)
 #A7E7A1 #C982C6
 
-rgb(208, 103, 139) rgb(157, 240, 223)
-#D0678B #9DF0DF
+rgb( 50,  82, 152) rgb(248, 250, 187)
+#325298 #F8FABB
 
 ============================================================
 
@@ -90,3 +72,13 @@ rgb(225, 247, 161) rgb(128,  90, 186)
 ============================================================
 
 devTools.customHueMix('#000000', '#F8FBBB', 18.22 / 100, OkLCh.HueMethod.Shorter);
+
+============================================================
+
+devTools.scalingArray(['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'], 1609, OkLCh.HueMethod.Increasing, true)
+devTools.scalingArray(['#CF6455', '#F8FABB', '#A7E7A1', '#A3F1EF', '#325298', '#C982C6'], 1609, OkLCh.HueMethod.Increasing, true)
+
+oklch(0.6280, 0.1385,  29.2339) oklch(0.9680, 0.1134, 109.7692) oklch(0.8664, 0.1585, 142.4953) oklch(0.9054, 0.0831, 194.7689) oklch(0.4520, 0.1684, 264.0520) oklch(0.7017, 0.1734, 328.3634) 
+
+rgb(207, 100,  85) rgb(249, 252, 160) rgb(146, 238, 139) rgb(156, 242, 241) rgb( 34,  76, 178) rgb(216, 115, 212) 
+#CF6455 #F9FCA0 #92EE8B #9CF2F1 #224CB2 #D873D4 
