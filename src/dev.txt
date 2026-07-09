@@ -11,6 +11,9 @@ rgb(221,  86,  71) rgb(251, 253, 136)
 rgb(100, 248,  92) rgb(107, 250, 249)
 #64F85C #6BFAF9
 
+rgb( 50,  82, 152) rgb(248, 250, 187)
+#325298 #F8FABB
+
 ============================================================
 
 devTools.manual('#ffff00', '#0000ff', 0.21100590772552355);
@@ -78,7 +81,15 @@ devTools.customHueMix('#000000', '#F8FBBB', 18.22 / 100, OkLCh.HueMethod.Shorter
 devTools.scalingArray(['#ff0000', '#ffff00', '#00ff00', '#00ffff', '#0000ff', '#ff00ff'], 1609, OkLCh.HueMethod.Increasing, true)
 devTools.scalingArray(['#CF6455', '#F8FABB', '#A7E7A1', '#A3F1EF', '#325298', '#C982C6'], 1609, OkLCh.HueMethod.Increasing, true)
 
-oklch(0.6280, 0.1385,  29.2339) oklch(0.9680, 0.1134, 109.7692) oklch(0.8664, 0.1585, 142.4953) oklch(0.9054, 0.0831, 194.7689) oklch(0.4520, 0.1684, 264.0520) oklch(0.7017, 0.1734, 328.3634) 
-
 rgb(207, 100,  85) rgb(249, 252, 160) rgb(146, 238, 139) rgb(156, 242, 241) rgb( 34,  76, 178) rgb(216, 115, 212) 
 #CF6455 #F9FCA0 #92EE8B #9CF2F1 #224CB2 #D873D4 
+
+rgb(207, 100,  85) rgb(248, 250, 187) rgb(167, 231, 161) rgb(163, 241, 239) rgb( 50,  82, 152) rgb(201, 130, 198) 
+#CF6455 #F8FABB #A7E7A1 #A3F1EF #325298 #C982C6
+
+============================================================
+
+devTools.linearMax('#000000', '#e3d1ab');
+rgb(255, 235, 193)
+#FFEBC1
+Mid t 0.9158314852775897

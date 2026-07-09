@@ -109,7 +109,7 @@ class LinearRGB {
 	}
 
 	get isInside() {
-		return this.r <= 1 && this.r >= 0 && this.g <= 1 && this.g >= 0 && this.b <= 1 && this.b >= 0
+		return this.r <= 1 && this.r >= 0 && this.g <= 1 && this.g >= 0 && this.b <= 1 && this.b >= 0;
 	}
 
 	copy() {
@@ -207,8 +207,8 @@ class LinearRGB {
 class OkLab {
 	constructor(l = 0, a = 0, b = 0) {
 		this.l = l;
-		this.a = this.l <= 0 || this.l >= 1 ? 0 : a;
-		this.b = this.l <= 0 || this.l >= 1 ? 0 : b;
+		this.a = a;
+		this.b = b;
 	}
 
 	mult(s) {
@@ -239,6 +239,10 @@ class OkLab {
 			MathCustom.FloatCharLead(l, 4, 6) + ', ' + 
 			MathCustom.FloatCharLead(this.a, 4, 7) + ', ' + 
 			MathCustom.FloatCharLead(this.b, 4, 7) + ')';
+	}
+
+	get isInside() {
+		return (OkLab.OkLabtosRGB(this)).isInside;
 	}
 
 	static mix(lab1, lab2, t) {

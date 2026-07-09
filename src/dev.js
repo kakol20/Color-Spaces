@@ -253,5 +253,59 @@ const devTools = {
 		console.log(out_sRGB, out_OkLCh);
 		console.log(out_sRGB.CSSColor);
 		console.log(sRGB.sRGBToHex(out_sRGB));
+	},
+
+	// Find linear end colour that sits at edge of sRGB gamut
+	linearMax: function (hexStart, hexMid, maxIterations = 100) {
+		console.clear();
+		const start_sRGB = sRGB.HexTosRGB(hexStart);
+		const mid_sRGB = sRGB.HexTosRGB(hexMid);
+
+		const start = OkLab.sRGBtoOKLab(start_sRGB);
+		const midC = OkLab.sRGBtoOKLab(mid_sRGB);
+
+		let lo = start.copy();
+		let hi = midC.copy();
+
+		hi.l = (midC.l - start.l) * 100 + start.l;
+		hi.a = (midC.a - start.a) * 100 + start.a;
+		hi.b = (midC.b - start.b) * 100 + start.b;
+
+		let iter = 0;
+		while (iter < maxIterations) {
+			const oldRGB = OkLab.OkLabtosRGB(lo);
+
+			let mid = start.copy();
+			mid.l = (lo.l + hi.l) / 2;
+			mid.a = (lo.a + hi.a) / 2;
+			mid.b = (lo.b + hi.b) / 2;
+
+			// console.log(mid);
+
+			if (mid.isInside) {
+				lo = mid.copy();
+
+				const newRGB = OkLab.OkLabtosRGB(lo);
+				// if (oldRGB.CSSColor === newRGB.CSSColor) break;
+			} else {
+				hi = mid.copy();
+			}
+			++iter;
+		}
+		console.log(start, midC);
+		console.log(lo);
+
+		const lo_sRGB = OkLab.OkLabtosRGB(lo);
+		console.log(lo_sRGB.CSSColor);
+		console.log(sRGB.sRGBToHex(lo_sRGB));
+
+		// const midT = 
+		/*
+			lo = (mid - start) * t + start;
+			lo - start = (mid - start) * t
+			(mid - start) / (lo - start)
+		*/
+		const midT = (midC.l - start.l) / (lo.l - start.l);
+		console.log('Mid t', midT);
 	}
 }
