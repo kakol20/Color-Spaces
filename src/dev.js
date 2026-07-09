@@ -257,14 +257,14 @@ const devTools = {
 
 	// Find linear end colour that sits at edge of sRGB gamut
 	linearMax: function (hexStart, hexMid, maxIterations = 100) {
-		console.clear();
+		// console.clear();
 		const start_sRGB = sRGB.HexTosRGB(hexStart);
 		const mid_sRGB = sRGB.HexTosRGB(hexMid);
 
 		const start = OkLab.sRGBtoOKLab(start_sRGB);
 		const midC = OkLab.sRGBtoOKLab(mid_sRGB);
 
-		let lo = start.copy();
+		let lo = midC.copy();
 		let hi = midC.copy();
 
 		hi.l = (midC.l - start.l) * 100 + start.l;
@@ -280,31 +280,23 @@ const devTools = {
 			mid.a = (lo.a + hi.a) / 2;
 			mid.b = (lo.b + hi.b) / 2;
 
-			// console.log(mid);
-
 			if (mid.isInside) {
 				lo = mid.copy();
 
 				const newRGB = OkLab.OkLabtosRGB(lo);
-				// if (oldRGB.CSSColor === newRGB.CSSColor) break;
+				if (oldRGB.CSSColor === newRGB.CSSColor) break;
 			} else {
 				hi = mid.copy();
 			}
 			++iter;
 		}
 		console.log(start, midC);
-		console.log(lo);
+		console.log(lo, hi);
 
 		const lo_sRGB = OkLab.OkLabtosRGB(lo);
 		console.log(lo_sRGB.CSSColor);
 		console.log(sRGB.sRGBToHex(lo_sRGB));
 
-		// const midT = 
-		/*
-			lo = (mid - start) * t + start;
-			lo - start = (mid - start) * t
-			(mid - start) / (lo - start)
-		*/
 		const midT = (midC.l - start.l) / (lo.l - start.l);
 		console.log('Mid t', midT);
 	}
